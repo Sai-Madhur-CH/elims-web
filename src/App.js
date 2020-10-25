@@ -11,11 +11,8 @@ function App() {
     <div className="app">
       <Router>
         <Switch>
-          <Route path="/login">
+          <Route path="/">
             <LoginInSlide />
-          </Route>
-          <Route path="/dashbord">
-            <h1>Dashbord Page</h1>
           </Route>
         </Switch>
       </Router>
