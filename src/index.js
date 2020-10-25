@@ -3,10 +3,40 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import KronaOne from '../src/Assets/KronaOne-Regular.ttf'
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#08436F',
+    },
+    secondary: {
+      main: '#031D31',
+    },
+  },
+  status: {
+    danger: 'orange',
+  },
+  typography: {
+    fontFamily: 
+    "'Krona One', sans-serif",
+  },
+  overrides: {
+    MuiCssBaseline: {
+      '@global': {
+        '@font-face': [KronaOne],
+      },
+    },
+  },
+});
 
 ReactDOM.render(
   <React.StrictMode>
+    <ThemeProvider theme={theme}>
     <App />
+    </ThemeProvider>
+    
   </React.StrictMode>,
   document.getElementById('root')
 );

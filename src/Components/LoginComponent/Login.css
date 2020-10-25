@@ -13,8 +13,8 @@
     background-position: center;
     height: 100%;
     width: 100%;
-    filter: blur(5px);
-    -webkit-filter: blur(3px);
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
 }
 
 .login__contentdiv {
@@ -26,5 +26,5 @@
     padding: 60px 50px 40px 50px;
     width: 25%;
     background: #fff;
-    border-radius: 10px;
+    border-radius: 25px;
 }

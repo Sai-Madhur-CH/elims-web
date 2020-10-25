@@ -13,7 +13,7 @@ import logo from '../../Assets/full_logo.png';
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography color="primary" variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       {/* <Link color="inherit" href="https://material-ui.com/">
         Your Website
@@ -51,6 +51,7 @@ export default function LoginInSide() {
             <img className={classes.logo} src={logo} alt={'ECLIMS'} />
            <form className={classes.form} noValidate>
             <TextField
+              color="primary"
               variant="outlined"
               margin="normal"
               required
@@ -62,6 +63,7 @@ export default function LoginInSide() {
               autoFocus
             />
             <TextField
+              color="primary"
               variant="outlined"
               margin="normal"
               required
@@ -73,6 +75,7 @@ export default function LoginInSide() {
               autoComplete="current-password"
             />
             <FormControlLabel
+              color="primary"
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
@@ -87,7 +90,7 @@ export default function LoginInSide() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link color="primary" href="#" variant="body2">
                   Forgot password?
                 </Link>
               </Grid>
