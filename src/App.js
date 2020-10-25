@@ -11,9 +11,7 @@ function App() {
     <div className="app">
       <Router>
         <Switch>
-          <Route path="/">
-            <LoginInSlide />
-          </Route>
+          <Route path="/" component={LoginInSlide}/>
         </Switch>
       </Router>
     </div>

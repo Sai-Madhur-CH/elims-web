@@ -15,16 +15,21 @@
     width: 100%;
     filter: blur(8px);
     -webkit-filter: blur(8px);
+    opacity: 0.5;
 }
 
 .login__contentdiv {
     position: absolute;
     top: 15vh;
     left: 35%;
-    opacity: 1;
+    opacity: 0.8;
     float: left;
     padding: 60px 50px 40px 50px;
     width: 25%;
     background: #fff;
     border-radius: 25px;
+}
+
+.login__alert {
+    width: 100%;
 }
