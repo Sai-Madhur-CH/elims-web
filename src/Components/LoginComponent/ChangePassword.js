@@ -1,17 +1,13 @@
 import React,{ useState } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-// import Link from '@material-ui/core/Link';
-// import Box from '@material-ui/core/Box';
-// import Grid from '@material-ui/core/Grid';
-// import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import './Login.css';
 import logo from '../../Assets/full_logo.png';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import {auth} from '../../Api/Api.js';
-// import { useHistory } from "react-router-dom";
+import { auth } from '../../Api/Api';
+import { useHistory } from "react-router-dom";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -34,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ChangePassword() {
     const classes = useStyles();
+    const history = useHistory();
     const [newpassword, setnewpassword] = useState('');
     const [confirmpassword, setconfirmpassword] = useState('');
     const handleClick = () => {
@@ -60,12 +57,27 @@ export default function ChangePassword() {
         else if (newpassword.search('[!@#$&*_~]') < 0) {
             toast.error("Your password must contain at least of this !, @, #, $, &, *, _, ~ character.");
         }
+        else if ((newpassword !== null || newpassword !== '') && (confirmpassword !== null || confirmpassword !== '')){
+            update_password()
+        }
+    };
 
-  
+    const update_password = async () => {
+    const api = await auth;
+    api.put('/change_password', {new_password:newpassword,confirm_password:confirmpassword})
+    .then(res =>{
+        if (res.data.status === 'success') {
+            toast.success("Password updated.")
+            history.push({
+                pathname: '/dashboard',
+            });
+        }
+    })
     }
+
     return (
     <div className="login">
-        <div className="login__bgimage" />
+        <div className="changepassword__bgimage" />
         <div className="login__contentdiv">
             <img className={classes.logo} src={logo} alt={'ECLIMS'} />
            <form className={classes.form} >

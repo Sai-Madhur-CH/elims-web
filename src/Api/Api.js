@@ -17,9 +17,6 @@ auth = (function() {
 var createAuthApi = env => {
   const auth = axios.create({
     baseURL: env.API_URL,
-    // headers: {
-    //   companyID: env.COMPANYID,
-    // },
   });
   auth.interceptors.request.use(config => {
     // login
@@ -38,7 +35,7 @@ var createAuthApi = env => {
         header = config.data.headers;
       }
       config.headers = {
-        Authorization:  JSON.parse(localStorage.getItem('User')),
+        Authorization:  JSON.parse(localStorage.getItem('User')).token,
         ...header,
       };
     }

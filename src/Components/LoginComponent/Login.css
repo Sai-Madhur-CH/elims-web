@@ -20,7 +20,7 @@
 
 .login__contentdiv {
     position: absolute;
-    top: 15vh;
+    top: 20vh;
     left: 35%;
     opacity: 0.8;
     float: left;
@@ -32,4 +32,18 @@
 
 .login__alert {
     width: 100%;
+}
+
+.changepassword__bgimage {
+    position: absolute;
+    /* background-image: url('https://source.unsplash.com/random/1440x1229');
+    background-repeat: no-repeat; */
+    background-image: url(../../Assets/bg_2.jpg);
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+    width: 100%;
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+    opacity: 0.5;
 }
