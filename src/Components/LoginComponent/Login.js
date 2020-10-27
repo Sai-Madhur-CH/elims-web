@@ -1,4 +1,4 @@
-import React,{ useState } from 'react';
+import React,{ useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
@@ -49,6 +49,15 @@ export default function LoginInSide() {
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
   const history = useHistory();
+
+  useEffect(() => {
+    if (JSON.parse(localStorage.getItem('User')) !== null){
+      history.push({
+        pathname: '/dashboard',
+      });
+    }
+  });
+
   const login = async () => {
     const api = await auth;
     const data = {
@@ -90,10 +99,10 @@ export default function LoginInSide() {
       if (email === null || email === ''){
           toast.error('Please provide proper Email / Phone.')
       }
-      if (password === null || password === ''){
+      else if (password === null || password === ''){
           toast.error('Please provide proper Password.')
       } 
-      if ((email !== null || email !== '') && (password !== null || password !== '')){
+      else if ((email !== null || email !== '') && (password !== null || password !== '')){
           login()
       }
 

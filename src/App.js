@@ -12,7 +12,7 @@ import ChangePassword from './Components/LoginComponent/ChangePassword';
 function App() {
   return (
     <div className="app">
-      <ToastContainer autoClose={2500} newestOnTop={true} closeOnClick pauseOnHover />
+      <ToastContainer autoClose={3000} newestOnTop={true} closeOnClick pauseOnHover />
       <Router>
         <Switch>
           <Route path="/dashboard" component={Dashboard}/>
