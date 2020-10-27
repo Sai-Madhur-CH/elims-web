@@ -3,7 +3,6 @@
  **/
 
 import axios from 'axios';
-// import { store } from '../index';
 
 export const 
 auth = (function() {
@@ -21,6 +20,29 @@ var createAuthApi = env => {
     // headers: {
     //   companyID: env.COMPANYID,
     // },
+  });
+  auth.interceptors.request.use(config => {
+    // login
+    if (config.data && config.data.method) {
+      if (config.data.method === 'login') {
+        const { loginName, password } = config.data;
+        delete config.data.method;
+        config.headers = {
+          Authorization: 'Basic ' + window.btoa(loginName + ':' + password),
+          companyID: env.COMPANYID,
+        };
+      } 
+    } else {
+      let header = null;
+      if (config.data && config.data.headers) {
+        header = config.data.headers;
+      }
+      config.headers = {
+        Authorization:  JSON.parse(localStorage.getItem('User')),
+        ...header,
+      };
+    }
+    return config;
   });
 
   return auth

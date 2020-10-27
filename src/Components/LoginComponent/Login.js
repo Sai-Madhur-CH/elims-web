@@ -1,8 +1,6 @@
 import React,{ useState } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
@@ -10,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import './Login.css';
 import logo from '../../Assets/full_logo.png';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {auth} from '../../Api/Api.js';
 import { useHistory } from "react-router-dom";
@@ -53,35 +51,40 @@ export default function LoginInSide() {
   const history = useHistory();
   const login = async () => {
     const api = await auth;
-    let data = {
-        username: email,
+    const data = {
+        email_phone: email,
         password: password,
+        method: 'login',
     };
     api
         .post('/login', data)
         .then(res => {
-            if (
-                res &&
-                res.data &&
-                res.data.status &&
-                res.data.status === 'success'
-            ) {
-                console.log(res,"LOGIN");
+            if (res.data.status === 'active') {
                 localStorage.setItem('User', JSON.stringify(res.data));
-                history.push({
+                toast.success("Logged In Successfully.")
+                if (res.data.login_count === 1){
+                  history.push({
+                    pathname: '/change_password',
+                  });
+                }
+                if (res.data.login_count > 1){
+                  history.push({
                     pathname: '/dashboard',
-                });
-            } 
-            if (res.status === 500){
-                toast.error('Internal Server Error')
+                  });
+                }
+                
             }
-            if (res.status === 201){
-                toast.success('UnAuthorized User')
+            if (res.data.status === 'wrong password'){
+                toast.error(res.data.msg)
+            }
+            if (res.data.status === 'unauthorized user'){
+                toast.error('Unauthorized user.')
+            }
+            if (res.data.status === 'inactive'){
+                toast.error('User locaked for 24 hours.')
             }
         })
-        .catch(err => {
-            console.log(err, 'errrrrrrrrrrrrrr');
-        });
+        
 };
   const handleClick = () => {
       if (email === null || email === ''){
@@ -128,11 +131,11 @@ export default function LoginInSide() {
               autoComplete="current-password"
               onChange = { (e) => setpassword(e.target.value)  }
             />
-            <FormControlLabel
+            {/* <FormControlLabel
               color="primary"
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
-            />
+            /> */}
             <Button
               fullWidth
               variant="contained"
@@ -142,7 +145,6 @@ export default function LoginInSide() {
             >
               Log In
             </Button>
-            <ToastContainer />
             <Grid container>
               <Grid item xs>
                 <Link color="primary" href="#" variant="body2">
