@@ -94,7 +94,9 @@ export default function LoginInSide() {
             }
         })
         
-};
+  };
+
+
   const handleClick = () => {
       if (email === null || email === ''){
           toast.error('Please provide proper Email / Phone.')
@@ -105,8 +107,13 @@ export default function LoginInSide() {
       else if ((email !== null || email !== '') && (password !== null || password !== '')){
           login()
       }
+  };
 
-  }
+  const redirectforgotpassword = () => {
+    history.push({
+      pathname: '/forgot_password',
+    });
+  };
 
   return (
     <div className="login">
@@ -156,7 +163,7 @@ export default function LoginInSide() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link color="primary" href="#" variant="body2">
+                <Link color="primary" href="#" variant="body2" onClick={redirectforgotpassword}>
                   Forgot password?
                 </Link>
               </Grid>

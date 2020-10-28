@@ -8,6 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import LoginInSlide from './Components/LoginComponent/Login';
 import Dashboard from './Components/DashboardComponent/Dashboard';
 import ChangePassword from './Components/LoginComponent/ChangePassword';
+import ForgotPassword from './Components/LoginComponent/ForgotPassword'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Switch>
           <Route path="/dashboard" component={Dashboard}/>
           <Route path='/change_password' component={ChangePassword}/>
+          <Route path='/forgot_password' component={ForgotPassword}/>
           <Route path="/" component={LoginInSlide}/>
         </Switch>
       </Router>

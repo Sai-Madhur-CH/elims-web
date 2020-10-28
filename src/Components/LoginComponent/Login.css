@@ -47,3 +47,17 @@
     -webkit-filter: blur(8px);
     opacity: 0.5;
 }
+
+.forgotpassword__bgimage {
+    position: absolute;
+    /* background-image: url('https://source.unsplash.com/random/1440x1229');
+    background-repeat: no-repeat; */
+    background-image: url(../../Assets/bg_3.jpg);
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+    width: 100%;
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+    opacity: 0.5;
+}
