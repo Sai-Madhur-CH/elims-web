@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { auth } from '../../Api/Api';
 import { useHistory } from "react-router-dom";
+import { Typography } from '@material-ui/core';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -25,6 +26,12 @@ const useStyles = makeStyles((theme) => ({
         height: 40,
         marginBottom: 10,
     },
+    note: {
+        fontSize:10,
+        marginTop: theme.spacing(2),
+        color: "red",
+        fontFamily: "arial",
+    }
   }));
 
 
@@ -33,6 +40,7 @@ export default function ChangePassword() {
     const history = useHistory();
     const [newpassword, setnewpassword] = useState('');
     const [confirmpassword, setconfirmpassword] = useState('');
+    const [passwordnote] = useState('Password must contain at least one digit, one capital letter and one of this !, @, #, $, &, *, _, ~ characters and minimum of 8 characters.');
     const handleClick = () => {
         if (newpassword === null || newpassword === ''){
             toast.error('Please enter new password.')
@@ -108,6 +116,9 @@ export default function ChangePassword() {
               autoComplete="confirmpassword"
               onChange = { (e) => setconfirmpassword(e.target.value)  }
             />
+            <Typography className={classes.note}>
+                {passwordnote}
+            </Typography>
             <Button
               fullWidth
               variant="contained"
