@@ -40,18 +40,28 @@ export default function ForgotPassword() {
     const [email, setemail] = useState();
     const [phone, setphone] = useState();
 
-    // const update_password = async () => {
-    // const api = await auth;
-    // api.put('/change_password', {new_password:newpassword,confirm_password:confirmpassword})
-    // .then(res =>{
-    //     if (res.data.status === 'success') {
-    //         toast.success("Password updated.")
-    //         history.push({
-    //             pathname: '/dashboard',
-    //         });
-    //     }
-    // })
-    // }
+    const send_email = async () => {
+    const api = await auth;
+    api.post('/forgot_password', {email:email,phone:phone,method:'forgot password'})
+    .then(res =>{
+        if (res.data.status === 'success') {
+            toast.success("OTP is sent to the registered email.")
+            history.push({
+                pathname: '/',
+            });
+        }
+    })
+    }
+
+    const handleClick = () => {
+        if (email === null || email === ''){
+            toast.error('Please enter email.')
+        }
+        else if (phone === null || phone === ''){
+            toast.error('Please enter phone number.')
+        } 
+        send_email()
+    }
 
     return (
     <div className="login">
@@ -92,7 +102,7 @@ export default function ForgotPassword() {
               variant="contained"
               color="primary"
               className={classes.submit}
-            //   onClick = {handleClick}
+              onClick = {handleClick}
             >
               Email me recovery password
             </Button>

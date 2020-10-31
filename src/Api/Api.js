@@ -28,6 +28,9 @@ var createAuthApi = env => {
           Authorization: 'Basic ' + window.btoa(loginName + ':' + password),
           companyID: env.COMPANYID,
         };
+      if (config.data.method === 'forgot password') {
+        delete config.data.method;
+      }
       } 
     } else {
       let header = null;
