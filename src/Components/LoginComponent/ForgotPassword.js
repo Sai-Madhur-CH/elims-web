@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { auth } from '../../Api/Api';
 import { useHistory } from "react-router-dom";
 import { Typography } from '@material-ui/core';
+import Link from '@material-ui/core/Link';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,8 +38,8 @@ const useStyles = makeStyles((theme) => ({
 export default function ForgotPassword() {
     const classes = useStyles();
     const history = useHistory();
-    const [email, setemail] = useState();
-    const [phone, setphone] = useState();
+    const [email, setemail] = useState('');
+    const [phone, setphone] = useState('');
 
     const send_email = async () => {
     const api = await auth;
@@ -50,17 +51,33 @@ export default function ForgotPassword() {
                 pathname: '/',
             });
         }
+        else if (res.data.status === 'unauthorized user') {
+            toast.error("There is not user with provide Email and Passord")
+            history.push({
+                pathname: '/',
+            });
+        }
     })
     }
 
     const handleClick = () => {
         if (email === null || email === ''){
+            console.log("ENTERED");
             toast.error('Please enter email.')
         }
         else if (phone === null || phone === ''){
             toast.error('Please enter phone number.')
         } 
-        send_email()
+        else if ((email !== null || email !== '') && 
+                 (phone !== null || phone !== '')){
+            send_email()
+        }
+    }
+
+    const redirectlogin = () => {
+        history.push({
+            pathname: '/',
+        });
     }
 
     return (
@@ -106,6 +123,9 @@ export default function ForgotPassword() {
             >
               Email me recovery password
             </Button>
+            <Link color="primary" href="#" variant="body2" onClick={redirectlogin}>
+                Back
+            </Link>
           </form>
         </div>
     </div>
