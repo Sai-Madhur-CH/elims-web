@@ -52,10 +52,7 @@ export default function ForgotPassword() {
             });
         }
         else if (res.data.status === 'unauthorized user') {
-            toast.error("There is not user with provide Email and Passord")
-            history.push({
-                pathname: '/',
-            });
+            toast.error("There is not user with provide email and phone number.")
         }
     })
     }
