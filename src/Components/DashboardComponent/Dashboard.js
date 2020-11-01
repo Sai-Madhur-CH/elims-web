@@ -1,5 +1,7 @@
 import React,{ useEffect } from 'react';
 import { useHistory } from "react-router-dom";
+import Header from '../DashboardComponent/header';
+import Tabs from '../DashboardComponent/Tabs';
 
 export default function Dashboard() {
 
@@ -15,10 +17,9 @@ export default function Dashboard() {
   });
 
     return (
-    <div>
-      <h1>
-        Dashbord
-      </h1>
+    <div className='dashbord_div'>
+      <Header/>
+      <Tabs/>
     </div>
     );
 }
