@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
   indicator: {
-    backgroundColor: "#F64848",
+    backgroundColor: theme.status.danger,
     height: "10px",
     top: "45px"
   },

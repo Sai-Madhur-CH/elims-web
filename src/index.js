@@ -16,7 +16,7 @@ const theme = createMuiTheme({
     },
   },
   status: {
-    danger: 'orange',
+    danger: '#F64848',
   },
   typography: {
     fontFamily: 

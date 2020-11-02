@@ -88,7 +88,7 @@ export default function Header() {
                 <Toolbar>
                 <img className={classes.dashbord_logo} src={logo} alt="ECLIMS"/>
                 <Typography variant="h6" className={classes.title}>
-                    Dashbord
+                    Dashboard
                 </Typography>
                 <div className={classes.header_action}>
                     <IconButton color="inherit" onClick={handleMenu}>
