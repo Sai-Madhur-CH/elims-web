@@ -25,7 +25,7 @@ export default function Tabs() {
   const [value, setValue] = useState('');
 
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem('User')).role_name === "Super Admin"){
+    if (JSON.parse(localStorage.getItem('User')) !== null && JSON.parse(localStorage.getItem('User')).role_name === "Super Admin"){
         setlable([
             {'label':'Add Site',
                    'value':'0',
@@ -50,13 +50,13 @@ export default function Tabs() {
       <TabContext value={value}>
         <AppBar position="static">
           <TabList onChange={handleChange} aria-label="simple tabs example" TabIndicatorProps= {{ className: classes.indicator }}>
-            {label.map((item) => (
-                <Tab label={item.label} value={item.value} />
+            {label.map((item, index) => (
+                <Tab key={index} label={item.label} value={item.value} />
             ))}
           </TabList>
         </AppBar>
-        {label.map((item) => (
-            <TabPanel value={item.value}>{item.component}</TabPanel>
+        {label.map((item, index) => (
+            <TabPanel key={index} value={item.value}>{item.component}</TabPanel>
         ))}
       </TabContext>
     </div>

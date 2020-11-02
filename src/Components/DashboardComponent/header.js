@@ -54,8 +54,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Header() {
     const classes = useStyles();
     const history = useHistory();
-    const username = useState(JSON.parse(localStorage.getItem('User')).name );
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [username, setUsername] = useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
     const handleMenu = (event) => {
@@ -80,7 +80,10 @@ export default function Header() {
             pathname: '/',
           });
         }
-      });
+        else {
+            setUsername( JSON.parse(localStorage.getItem('User')).name )
+        }
+      },[history, username]);
 
     return (
         <div className={classes.header}>
