@@ -18,6 +18,14 @@ const theme = createMuiTheme({
   status: {
     danger: '#F64848',
   },
+  hover:{
+    primary: {
+      main: '#39688b',
+    },
+    secondary: {
+      main: '#031D31',
+    }
+  },
   typography: {
     fontFamily: 
     "'Krona One', sans-serif",
@@ -36,7 +44,6 @@ ReactDOM.render(
     <ThemeProvider theme={theme}>
     <App />
     </ThemeProvider>
-    
   </React.StrictMode>,
   document.getElementById('root')
 );

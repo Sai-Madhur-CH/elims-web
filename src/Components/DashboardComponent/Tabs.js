@@ -6,8 +6,7 @@ import TabContext from '@material-ui/lab/TabContext';
 import TabList from '@material-ui/lab/TabList';
 import TabPanel from '@material-ui/lab/TabPanel';
 import Adduser from '../DashboardComponent/AddUser';
-import Addsite from '../DashboardComponent/AddSite';
-import Userstable from './UsersTable';
+import PhysicianDashbord from './PhysicianDashbord';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,19 +52,14 @@ export default function Tabs() {
     if (JSON.parse(localStorage.getItem('User')) !== null && JSON.parse(localStorage.getItem('User')).role_name === "Admin"){
         setlable([
             {
-                'label':'Add Site',
+                'label':'User Management',
                 'value':'0',
-                'component': <Addsite/>
-            },
-            {
-                'label':'Add User',
-                'value':'1',
                 'component': <Adduser/>
             },
             {
-                'label':'Users',
-                'value':'2',
-                'component': <Userstable/>
+                'label':'Physician',
+                'value':'1',
+                'component': <PhysicianDashbord/>,
             },]);
         setValue('0');
       }

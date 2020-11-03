@@ -1,33 +1,38 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import { toast } from 'react-toastify';
+import Userstable from '../DashboardComponent/UsersTable';
 
 
 const useStyles = makeStyles((theme) => ({
+    root: {
+        flexGrow: 1,
+    },
     form:{
       '& .MuiTextField-root': {
-          position: 'relative',
-          display: 'flex',
-          left: '35%',
-          width: '25%',
           margin: theme.spacing(1),
           alignItem: "center",
          
       },
-      padding: "60px 50px 40px 50px",
+      '& .MuiFormControl-root': {
+          minWidth: "85%",
+      },
+      padding: "60px 0px 0px 0px",
     },
     add:{
         margin: theme.spacing(5),
-        right: '2%',
-        width: '25%',
     },
     menu:{
       '$ .MuiPaper-root': {
           backgroundColor: "red",
       },
+    },
+    table:{
+        objectFit:"cover",
+        maxHeight:"82vh",
     },
   
   }));
@@ -68,59 +73,63 @@ export default function Adduser() {
     }
 
     return (
-        <form className={classes.form} noValidate autoComplete="off">
-            <div >
-                <TextField
-                id="outlined-multiline-flexible"
-                label="Name"
-                variant="outlined"
-                required
-                onChange = { (e) => setName(e.target.value)  }
-                alignItems="center"
-                />
-                <TextField
-                id="outlined-textarea"
-                label="Email"
-                variant="outlined"
-                required
-                onChange = { (e) => setEmail(e.target.value)  }
-                alignItems="center"
-                />
-                <TextField
-                id="outlined-multiline-static"
-                type="number"
-                label="Phone Number"
-                variant="outlined"
-                required
-                onChange = { (e) => setPhone(e.target.value)  }
-                alignItems="center"
-                />
-                <TextField
-                id="outlined-select"
-                select
-                label="Role"
-                helperText="Please select user role."
-                variant="outlined"
-                required
-                onChange={ (e) => setRole(e.target.value)  }
-                alignItems="center"
-                >
-                    {roles.map((role, index) => (
-                        <MenuItem key={index} value={role} >
-                            {role}
-                        </MenuItem>
-                    ))}
-                </TextField>
-                <Button
-                variant="contained"
-                color="primary"
-                className={classes.add}
-                onClick={handleAdd}
-                alignItems="center"
-                >
-                    Add
-                </Button>
-            </div>
-        </form>
+        <Grid container className={classes.root} spacing={2}>
+            <Grid item xs={3}>
+                <form className={classes.form} noValidate autoComplete="off">
+                    <div >
+                        <TextField
+                        id="outlined-multiline-flexible"
+                        label="Name"
+                        variant="outlined"
+                        required
+                        onChange = { (e) => setName(e.target.value)  }
+                        />
+                        <TextField
+                        id="outlined-textarea"
+                        label="Email"
+                        variant="outlined"
+                        required
+                        onChange = { (e) => setEmail(e.target.value)  }
+                        />
+                        <TextField
+                        id="outlined-multiline-static"
+                        type="number"
+                        label="Phone Number"
+                        variant="outlined"
+                        required
+                        onChange = { (e) => setPhone(e.target.value)  }
+                        />
+                        <TextField
+                        id="outlined-select"
+                        select
+                        label="Role"
+                        helperText="Please select user role."
+                        variant="outlined"
+                        required
+                        onChange={ (e) => setRole(e.target.value)  }
+                        >
+                            {roles.map((role, index) => (
+                                <MenuItem key={index} value={role} >
+                                    {role}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                        <Button
+                        variant="contained"
+                        color="primary"
+                        className={classes.add}
+                        onClick={handleAdd}
+                        alignItems="center"
+                        >
+                            Add User
+                        </Button>
+                    </div>
+                </form>
+            </Grid>
+            <Grid className={classes.table} item xs={9}>
+                <Userstable/>
+            </Grid>
+        </Grid>
+        
     )
 }

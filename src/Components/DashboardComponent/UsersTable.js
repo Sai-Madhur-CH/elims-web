@@ -7,9 +7,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import SearchIcon from '@material-ui/icons/Search';
 import TextField from '@material-ui/core/TextField';
+import { Button } from '@material-ui/core';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -35,16 +34,27 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 650,
   },
   container: {
-    maxHeight: 600,
+    maxHeight: "70vh",
   },
   margin: {
     margin: theme.spacing(1),
-    left: "40%",
+    left: "30%",
+  },
+  searchButton: {
+    margin: theme.spacing(2),
+    backgroundColor: theme.palette.primary.main,
+    color: 'white',
+    left: '30%',
+    '&:hover': {
+      backgroundColor: theme.hover.secondary.main,
+      color: "white",
+    },
   },
 }));
 
-const rows = [
+export const rows = [
   {
+    "user_id": 1,
     "name": "Sai Madhur",
     "phone": 9553390695,
     "email": "ECLIMSAdmin@EISBIZ.NET",
@@ -52,6 +62,7 @@ const rows = [
     "status": "active"
   },
   {
+    "user_id": 2,
     "name": "paitent1",
     "phone": 9555555555,
     "email": "paitent1@EISBIZ.NET",
@@ -59,6 +70,7 @@ const rows = [
     "status": "active"
   },
   {
+    "user_id": 3,
     "name": "clinician1",
     "phone": 9553333333,
     "email": "clinician1@EISBIZ.NET",
@@ -66,17 +78,69 @@ const rows = [
     "status": "active"
   },
   {
+    "user_id": 4,
     "name": "physician1",
     "phone": 9000000031,
     "email": "physician1@EISBIZ.NET",
     "role_name": "Physician",
-    "status": "active"
+    "status": "active",
+    "appointments":[
+      { startDate: '2018-10-31T10:45', endDate: '2018-10-31T12:00', title: 'Meeting',roomId: 3 },
+      { startDate: '2018-11-01T09:45', endDate: '2018-11-01T11:00', title: 'Meeting',roomId: 1 },
+      { startDate: '2018-11-01T12:00', endDate: '2018-11-01T13:30', title: 'Meeting',roomId: 1 },
+    ],
   },
   {
+    "user_id": 5,
     "name": "receptionist1",
     "phone": 9000000100,
     "email": "receptionist1@EISBIZ.NET",
     "role_name": "Receptionist",
+    "status": "active"
+  },
+  {
+    "user_id": 6,
+    "name": "physician2",
+    "phone": 9000000031,
+    "email": "physician2@EISBIZ.NET",
+    "role_name": "Physician",
+    "status": "active",
+    "appointments":[
+      { startDate: '2018-10-30T10:45', endDate: '2018-10-30T12:00', title: 'Meeting',roomId: 1 },
+      { startDate: '2018-11-02T09:45', endDate: '2018-11-02T11:00', title: 'Meeting',roomId: 1 },
+      { startDate: '2018-11-03T12:00', endDate: '2018-11-03T13:30', title: 'Meeting',roomId: 2 },
+    ],
+  },
+  {
+    "user_id": 7,
+    "name": "receptionist2",
+    "phone": 9000000102,
+    "email": "receptionist2@EISBIZ.NET",
+    "role_name": "Receptionist",
+    "status": "active"
+  },
+  {
+    "user_id": 8,
+    "name": "clinician2",
+    "phone": 9553333332,
+    "email": "clinician2@EISBIZ.NET",
+    "role_name": "Clinician",
+    "status": "active"
+  },
+  {
+    "user_id": 9,
+    "name": "paitent2",
+    "phone": 9555555552,
+    "email": "paitent2@EISBIZ.NET",
+    "role_name": "Patient",
+    "status": "active"
+  },
+  {
+    "user_id": 10,
+    "name": "admin2",
+    "phone": 9000000005,
+    "email": "admin2@EISBIZ.NET",
+    "role_name": "Admin",
     "status": "active"
   },
 ];
@@ -89,7 +153,7 @@ export default function Userstable() {
 
   const excludeColumns = ["status"];
   
-  const filterData = (value) => {
+  function filterData(value)  {
     const lowercasedValue = value.toLowerCase().trim();
     if (lowercasedValue === "") setData(rows);
     else {
@@ -102,9 +166,9 @@ export default function Userstable() {
     }
   }
 
-  const handleSearch = (e) => {
-    setfilter(e.target.value, console.log(e.target.value))
-    if (filter !== null || filter !== ''){
+  const handleSearch = () => {
+    console.log('SEARCH', filter.length);
+    if (filter !== null || filter !== '' || filter.length > 0){
       filterData(filter)
     }
   }
@@ -115,15 +179,18 @@ export default function Userstable() {
         className={classes.margin}
         id="input-with-icon-textfield"
         label="Search for user"
-        onChange={handleSearch}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon />
-            </InputAdornment>
-          ),
-        }}
+        onChange={(e) => {setfilter(e.target.value)}}
+        // InputProps={{
+        //   startAdornment: (
+        //     <InputAdornment position='end'>
+        //       <IconButton className={classes.searchbutton}>
+        //         <SearchIcon />
+        //       </IconButton>
+        //     </InputAdornment>
+        //   ),
+        // }}
       />
+    <Button className={classes.searchButton} onClick={handleSearch}>Search</Button>
     <TableContainer className={classes.container} component={Paper}>
       <Table className={classes.table} stickyHeader aria-label="sticky table">
         <TableHead>
