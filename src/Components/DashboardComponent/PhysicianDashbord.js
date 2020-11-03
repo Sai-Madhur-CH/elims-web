@@ -95,17 +95,19 @@ function filterData(list, value, excludeColumns)  {
     }
   }
 
+  const physicians_list = filterData(rows, 'physician',["status","name"]);
+
 export default function PhysicianDashbord() {
     const classes = useStyles();
     const [filter, setfilter] =  useState('');
-    const [physicians, setPhysicians] = useState(filterData(rows, 'physician',["status","name"]));
+    const [physicians, setPhysicians] = useState(physicians_list);
     const [selected, setSelected] = useState({});
     const [currentViewName, setViewName ] = useState('work-week');
 
     const handleSearch = (e) => {
         setfilter(e.target.value)
         if (filter !== null || filter !== '' || filter.length > 0){
-            let data = filterData(rows, "physician", ["status","name"])
+            let data = physicians_list
             setPhysicians(filterData(data,filter, ["status"]))
         }
       }
