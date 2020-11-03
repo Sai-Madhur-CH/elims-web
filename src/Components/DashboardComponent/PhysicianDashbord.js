@@ -3,11 +3,15 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { ViewState } from '@devexpress/dx-react-scheduler';
 import {
-  Scheduler,
   Resources,
+  AppointmentTooltip,
+  Scheduler,
   WeekView,
   Appointments,
-  AppointmentTooltip,
+  Toolbar,
+  ViewSwitcher,
+  MonthView,
+  DayView,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import {rows} from './UsersTable';
 import ListItem from '@material-ui/core/ListItem';
@@ -96,6 +100,7 @@ export default function PhysicianDashbord() {
     const [filter, setfilter] =  useState('');
     const [physicians, setPhysicians] = useState(filterData(rows, 'physician',["status","name"]));
     const [selected, setSelected] = useState({});
+    const [currentViewName, setViewName ] = useState('work-week');
 
     const handleSearch = (e) => {
         setfilter(e.target.value)
@@ -155,11 +160,26 @@ export default function PhysicianDashbord() {
                 >
                 <ViewState
                     currentDate={currentDate}
+                    currentViewName={currentViewName}
+                    onCurrentViewNameChange={(e) => setViewName(e)}
                 />
+                
                 <WeekView
                     startDayHour={9}
                     endDayHour={20}
                 />
+                <WeekView
+                    name="work-week"
+                    displayName="Work Week"
+                    excludedDays={[0, 6]}
+                    startDayHour={9}
+                    endDayHour={19}
+                />
+                <MonthView />
+                <DayView />
+
+                <Toolbar />
+                <ViewSwitcher />
                 <Appointments palette={purple}  />
                 <AppointmentTooltip />
                 <Resources
