@@ -7,6 +7,8 @@ import TabList from '@material-ui/lab/TabList';
 import TabPanel from '@material-ui/lab/TabPanel';
 import Adduser from './UserManagement';
 import PhysicianDashbord from './PhysicianDashbord';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,13 +42,25 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "red",
     },
   },
-
+  selected: {
+    color: "white",
+    fontWeight: 600
+  },
+  hovermenu: {
+    "& .MuiPaper-root": {
+        backgroundColor: theme.palette.primary.main,
+        marginLeft: 30,
+        marginTop: 50
+    },
+  },
 }));
 
 export default function Tabs() {
   const classes = useStyles();
   const [label, setlable] = useState([])
   const [value, setValue] = useState('');
+  const [hover, setHover] = useState('');
+  const [anchorEl, setAnchorEl] = useState(null);
 
   useEffect(() => {
     if (JSON.parse(localStorage.getItem('User')) !== null && JSON.parse(localStorage.getItem('User')).role_name === "Admin"){
@@ -60,7 +74,13 @@ export default function Tabs() {
                 'label':'Physician',
                 'value':'1',
                 'component': <PhysicianDashbord/>,
-            },]);
+            },
+            {
+                'label':'Clinician',
+                'value':'2',
+                'component': '',
+            }
+        ]);
         setValue('0');
       }
   },[])
@@ -69,20 +89,70 @@ export default function Tabs() {
     setValue(newValue);
   };
 
+  function handleClick(event) {
+    if (anchorEl !== event.currentTarget) {
+      setAnchorEl(event.currentTarget);
+    }
+    if (event.target.dataset.info !== null || event.target.dataset.info !== undefined){
+        var data = JSON.parse(event.target.dataset.info)
+        setHover(data.label)
+    }
+  }
+
+  function handleClose() {
+    setAnchorEl(null);
+  }
+
+  function handleClinicianDropdown(component){
+      setValue('2')
+      handleClose()
+      let clinician = label[2]
+      clinician.component = component
+      label[2] = clinician
+      setlable(label)
+  }
+
   return (
     <div className={classes.root}>
       <TabContext value={value}>
         <AppBar position="static">
           <TabList onChange={handleChange} aria-label="simple tabs example" TabIndicatorProps= {{ className: classes.indicator }}>
             {label.map((item, index) => (
-                <Tab key={index} label={item.label} value={item.value} />
+                <Tab key={index} label={item.label} value={item.value} data-info={JSON.stringify(item)} onMouseOver={handleClick}/>
             ))}
           </TabList>
         </AppBar>
+        
+            {hover === 'Clinician' ? 
+            <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+            MenuListProps={{ onMouseLeave: handleClose }}
+            className={classes.hovermenu}
+            >
+            <MenuItem className={classes.selected} onClick={() => handleClinicianDropdown(<AllClinician/>)}>All Clinician</MenuItem>
+            <MenuItem className={classes.selected} onClick={() => handleClinicianDropdown(<AddClinician/>)}>Add Test</MenuItem>
+            </Menu> : null}
+        
         {label.map((item, index) => (
             <TabPanel key={index} value={item.value}>{item.component}</TabPanel>
         ))}
       </TabContext>
     </div>
   );
+}
+
+
+function AllClinician(){
+    return(
+        <h1>List of all Clinician</h1>
+    )
+}
+
+function AddClinician(){
+    return(
+        <h1>Addition of Clinician</h1>
+    )
 }
