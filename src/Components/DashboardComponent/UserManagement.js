@@ -4,7 +4,7 @@ import { Button, Grid } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import { toast } from 'react-toastify';
-import Userstable from '../DashboardComponent/UsersTable';
+import Userstable from './UsersTable';
 
 
 const useStyles = makeStyles((theme) => ({

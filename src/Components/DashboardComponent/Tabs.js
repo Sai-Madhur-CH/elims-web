@@ -5,7 +5,7 @@ import Tab from '@material-ui/core/Tab';
 import TabContext from '@material-ui/lab/TabContext';
 import TabList from '@material-ui/lab/TabList';
 import TabPanel from '@material-ui/lab/TabPanel';
-import Adduser from '../DashboardComponent/AddUser';
+import Adduser from './UserManagement';
 import PhysicianDashbord from './PhysicianDashbord';
 
 const useStyles = makeStyles((theme) => ({
