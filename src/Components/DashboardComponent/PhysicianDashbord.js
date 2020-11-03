@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { ViewState } from '@devexpress/dx-react-scheduler';
@@ -104,12 +104,15 @@ export default function PhysicianDashbord() {
     const [selected, setSelected] = useState({});
     const [currentViewName, setViewName ] = useState('work-week');
 
-    const handleSearch = (e) => {
-        setfilter(e.target.value)
-        if (filter !== null || filter !== '' || filter.length > 0){
+    useEffect(() => {
+        if (filter !== null || filter !== ''){
             let data = physicians_list
             setPhysicians(filterData(data,filter, ["status"]))
         }
+      },[filter]);
+
+    const handleSearch = (e) => {
+        setfilter(e.target.value)
       }
 
     const  renderListItem = ({data,index, style}) => {
