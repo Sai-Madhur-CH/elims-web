@@ -171,13 +171,12 @@ export default function PhysicianDashbord() {
                 <WeekView
                     name="work-week"
                     displayName="Work Week"
-                    excludedDays={[0, 6]}
+                    excludedDays={[0, 7]}
                     startDayHour={9}
-                    endDayHour={19}
+                    endDayHour={20}
                 />
                 <MonthView />
                 <DayView />
-
                 <Toolbar />
                 <ViewSwitcher />
                 <Appointments palette={purple}  />
