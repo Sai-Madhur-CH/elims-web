@@ -18,7 +18,8 @@ const useStyles = makeStyles((theme) => ({
   indicator: {
     backgroundColor: theme.status.danger,
     height: "10px",
-    top: "45px"
+    top: "45px",
+    cursor: "pointer",
   },
   form:{
     '& .MuiTextField-root': {
@@ -44,13 +45,17 @@ const useStyles = makeStyles((theme) => ({
   },
   selected: {
     color: "white",
-    fontWeight: 600
+    fontWeight: 600,
+    fontFamily: theme.headerFont.fontFamily,
   },
   hovermenu: {
     "& .MuiPaper-root": {
         backgroundColor: theme.palette.primary.main,
-        marginLeft: 30,
-        marginTop: 50
+        // marginLeft: 30,
+        marginTop: 50,
+        fontFamily: theme.headerFont.fontFamily,
+        minWidth : '11%',
+        // pointerEvents: 'none',
     },
   },
 }));
@@ -112,6 +117,12 @@ export default function Tabs() {
       setlable(label)
   }
 
+  useEffect(() => {
+    if (hover !== 'Clinician'){
+        handleClose()
+    }
+  },[anchorEl, hover]);
+
   return (
     <div className={classes.root}>
       <TabContext value={value}>
@@ -122,15 +133,17 @@ export default function Tabs() {
             ))}
           </TabList>
         </AppBar>
-            {console.log(hover, '----------->')}
+            {console.log(hover, Boolean(anchorEl),'----------->')}
             {hover === 'Clinician' ? 
             <Menu
             id="simple-menu"
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}
             onClose={handleClose}
+            onExit={handleClose}
             MenuListProps={{ onMouseLeave: handleClose }}
             className={classes.hovermenu}
+            disableRestoreFocus={true}
             >
             <MenuItem className={classes.selected} onClick={() => handleClinicianDropdown(<AllClinician/>)}>All Clinician</MenuItem>
             <MenuItem className={classes.selected} onClick={() => handleClinicianDropdown(<AddClinician/>)}>Add Test</MenuItem>
