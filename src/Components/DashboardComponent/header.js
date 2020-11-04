@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
       flexGrow: 1,
+      fontFamily: theme.headerFont.fontFamily,
     },
     header:{
         display: "flex",
@@ -40,10 +41,11 @@ const useStyles = makeStyles((theme) => ({
     },
     selected: {
         color: "white",
-        fontWeight: 600
+        fontWeight: 600,
+        fontFamily: theme.headerFont.fontFamily,
     },
     menu: {
-    "& .MuiPaper-root": {
+        "& .MuiPaper-root": {
         backgroundColor: theme.palette.primary.main,
         marginLeft: 30,
         marginTop: 30

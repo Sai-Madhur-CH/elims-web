@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
     recover:{
         margin: theme.spacing(3),
         fontSize: 22,
+        fontFamily : theme.headerFont.fontFamily,
     },
   }));
 

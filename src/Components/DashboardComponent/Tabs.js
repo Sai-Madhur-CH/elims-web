@@ -122,7 +122,7 @@ export default function Tabs() {
             ))}
           </TabList>
         </AppBar>
-        
+            {console.log(hover, '----------->')}
             {hover === 'Clinician' ? 
             <Menu
             id="simple-menu"

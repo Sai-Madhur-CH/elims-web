@@ -4,7 +4,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import KronaOne from '../src/Assets/KronaOne-Regular.ttf'
+// import KronaOne from '../src/Assets/KronaOne-Regular.ttf';
+import OpenSans from '../src/Assets/OpenSans-Regular.ttf';
 
 const theme = createMuiTheme({
   palette: {
@@ -26,14 +27,18 @@ const theme = createMuiTheme({
       main: '#031D31',
     }
   },
-  typography: {
+  headerFont:{
     fontFamily: 
     "'Krona One', sans-serif",
+  },
+  typography: {
+    fontFamily:
+    "'Open Sans', sans-serif",
   },
   overrides: {
     MuiCssBaseline: {
       '@global': {
-        '@font-face': [KronaOne],
+        '@font-face': [OpenSans],
       },
     },
   },

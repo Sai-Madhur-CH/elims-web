@@ -50,6 +50,9 @@ const useStyles = makeStyles((theme) => ({
       color: "white",
     },
   },
+  headerFont: {
+    fontFamily: theme.headerFont.fontFamily,
+  },
 }));
 
 export const rows = [
@@ -167,7 +170,6 @@ export default function Userstable() {
   }
 
   const handleSearch = () => {
-    console.log('SEARCH', filter.length);
     if (filter !== null || filter !== '' || filter.length > 0){
       filterData(filter)
     }
@@ -195,11 +197,11 @@ export default function Userstable() {
       <Table className={classes.table} stickyHeader aria-label="sticky table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>User Name</StyledTableCell>
-            <StyledTableCell align="right">Email</StyledTableCell>
-            <StyledTableCell align="right">Role</StyledTableCell>
-            <StyledTableCell align="right">Phone</StyledTableCell>
-            <StyledTableCell align="right">status</StyledTableCell>
+            <StyledTableCell className={classes.headerFont}>User Name</StyledTableCell>
+            <StyledTableCell className={classes.headerFont} align="right">Email</StyledTableCell>
+            <StyledTableCell className={classes.headerFont} align="right">Role</StyledTableCell>
+            <StyledTableCell className={classes.headerFont} align="right">Phone</StyledTableCell>
+            <StyledTableCell className={classes.headerFont} align="right">status</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>

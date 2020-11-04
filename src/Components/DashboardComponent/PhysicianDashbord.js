@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
         color: "white",
         padding: "1%",
         margin: "8px",
+        fontFamily: theme.headerFont.fontFamily,
     },
     margin: {
         margin: theme.spacing(2),
@@ -49,6 +50,9 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: theme.hover.primary.main,
             color: "white",
         },
+        '& .MuiTypography-colorTextSecondary':{
+            color: "white",
+        },
     },
     calander:{
         objectFit:"cover",
@@ -57,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     appointment:{
         backgroundColor: theme.palette.primary.main,
         color:"white",
-    }
+    },
   }));
 
 
@@ -95,14 +99,14 @@ function filterData(list, value, excludeColumns)  {
     }
   }
 
-  const physicians_list = filterData(rows, 'physician',["status","name"]);
+const physicians_list = filterData(rows, 'physician',["status","name"]);
 
 export default function PhysicianDashbord() {
     const classes = useStyles();
     const [filter, setfilter] =  useState('');
     const [physicians, setPhysicians] = useState(physicians_list);
     const [selected, setSelected] = useState({});
-    const [currentViewName, setViewName ] = useState('work-week');
+    const [currentViewName, setViewName ] = useState('');
 
     useEffect(() => {
         if (filter !== null || filter !== ''){
@@ -125,6 +129,7 @@ export default function PhysicianDashbord() {
             physicians.map((physician) => (
             <ListItem button key={physician.user_id} className={selected.user_id === physician.user_id ? classes.selected:null} >
                 <ListItemText 
+                className={classes.listItem}
                 primary={physician.name} 
                 secondary={physician.email} 
                 onClick={(e) => setSelected(physician)}/>
