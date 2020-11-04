@@ -201,7 +201,7 @@ export default function Userstable() {
             <StyledTableCell className={classes.headerFont} align="right">Email</StyledTableCell>
             <StyledTableCell className={classes.headerFont} align="right">Role</StyledTableCell>
             <StyledTableCell className={classes.headerFont} align="right">Phone</StyledTableCell>
-            <StyledTableCell className={classes.headerFont} align="right">status</StyledTableCell>
+            <StyledTableCell className={classes.headerFont} align="right">Status</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
