@@ -21,14 +21,13 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import SearchIcon from '@material-ui/icons/Search';
 import TextField from '@material-ui/core/TextField';
 import { FixedSizeList } from 'react-window';
-import purple from '@material-ui/core/colors/purple';
-
+import { rooms } from '../DashboardComponent/PhysicianDashbord';
 
 
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
-        width: "99%",
+        width : '99%',
         marginTop: "3%",
     },
     heading: {
@@ -102,19 +101,20 @@ function filterData(list, value, excludeColumns)  {
     }
   }
 
-const physicians_list = filterData(rows, 'physician',["status","name"]);
+const clinician_list = filterData(rows, 'clinician',["status","name"]);
 
-export default function PhysicianDashbord() {
+
+export default function ClinicianDashbord() {
     const classes = useStyles();
     const [filter, setfilter] =  useState('');
-    const [physicians, setPhysicians] = useState(physicians_list);
+    const [clinicians, setClinician] = useState(clinician_list);
     const [selected, setSelected] = useState({});
     const [currentViewName, setViewName ] = useState('');
 
     useEffect(() => {
         if (filter !== null || filter !== ''){
-            let data = physicians_list
-            setPhysicians(filterData(data,filter, ["status"]))
+            let data = clinician_list
+            setClinician(filterData(data,filter, ["status"]))
         }
       },[filter]);
 
@@ -125,11 +125,11 @@ export default function PhysicianDashbord() {
     const  renderListItem = ({data,index, style}) => {
 
         if (isEquivalent(selected,{}) || selected === null){
-            setSelected(physicians[0])
+            setSelected(clinicians[0])
         }
 
         return (
-            physicians.map((physician) => (
+            clinicians.map((physician) => (
             <ListItem button key={physician.user_id} className={selected.user_id === physician.user_id ? classes.selected:null} >
                 <ListItemText 
                 className={classes.listItem}
@@ -145,11 +145,11 @@ export default function PhysicianDashbord() {
     <Paper>
         <Grid container className={classes.root} spacing={2}>
             <Grid item xs={3}>
-                <Typography  className={classes.heading}>All Physicians</Typography>
+                <Typography  className={classes.heading}>All Clinicians</Typography>
                 <TextField
                     className={classes.margin}
                     id="input-with-icon-textfield"
-                    label="Search for Physician"
+                    label="Search for Clinician"
                     onChange={handleSearch}
                     InputProps={{
                     startAdornment: (
@@ -160,7 +160,7 @@ export default function PhysicianDashbord() {
                     }}
                 />
                 <div className={classes.fixedlist}>
-                    <FixedSizeList height={500} itemSize={physicians.length} itemCount={1}>
+                    <FixedSizeList height={500} itemSize={clinicians.length} itemCount={1}>
                         {renderListItem}
                     </FixedSizeList>
                 </div>
@@ -192,7 +192,7 @@ export default function PhysicianDashbord() {
                 <DayView />
                 <Toolbar />
                 <ViewSwitcher />
-                <Appointments palette={purple}  />
+                <Appointments />
                 <AppointmentTooltip />
                 <Resources
                     data={rooms}
@@ -202,29 +202,5 @@ export default function PhysicianDashbord() {
             </Grid>
         </Grid>
     </Paper>
-    
 );
 }
-
-
-export const rooms = [
-    {
-        fieldName: 'roomId',
-        title: 'Room',
-        instances: [
-            {
-                text: 'Room 001',
-                id: 1,
-                color: '#08436F'
-            }, {
-                text: 'Room 002',
-                id: 2,
-                color: '#031D31'
-            }, {
-                text: 'Room 003',
-                id: 3,
-                color: '#F64848'
-            }
-        ]
-    }
-]

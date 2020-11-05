@@ -10,6 +10,8 @@ import Userstable from './UsersTable';
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
+        width : '99%',
+        marginTop: "3%",
     },
     form:{
       '& .MuiTextField-root': {
@@ -37,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   
   }));
 
-export default function Adduser() {
+export default function UserManagement() {
     const classes = useStyles();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');

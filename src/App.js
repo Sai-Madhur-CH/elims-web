@@ -8,7 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import LoginInSlide from './Components/LoginComponent/Login';
 import Dashboard from './Components/DashboardComponent/Dashboard';
 import ChangePassword from './Components/LoginComponent/ChangePassword';
-import ForgotPassword from './Components/LoginComponent/ForgotPassword'
+import ForgotPassword from './Components/LoginComponent/ForgotPassword';
 
 function App() {
   return (

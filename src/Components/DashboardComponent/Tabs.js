@@ -9,6 +9,7 @@ import Adduser from './UserManagement';
 import PhysicianDashbord from './PhysicianDashbord';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import ClinicianDashbord from '../DashboardComponent/ClinicianDashboard';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -133,7 +134,6 @@ export default function Tabs() {
             ))}
           </TabList>
         </AppBar>
-            {console.log(hover, Boolean(anchorEl),'----------->')}
             {hover === 'Clinician' ? 
             <Menu
             id="simple-menu"
@@ -145,7 +145,7 @@ export default function Tabs() {
             className={classes.hovermenu}
             disableRestoreFocus={true}
             >
-            <MenuItem className={classes.selected} onClick={() => handleClinicianDropdown(<AllClinician/>)}>All Clinician</MenuItem>
+            <MenuItem className={classes.selected} onClick={() => handleClinicianDropdown(<ClinicianDashbord/>)}>All Clinician</MenuItem>
             <MenuItem className={classes.selected} onClick={() => handleClinicianDropdown(<AddClinician/>)}>Add Test</MenuItem>
             </Menu> : null}
         
@@ -155,13 +155,6 @@ export default function Tabs() {
       </TabContext>
     </div>
   );
-}
-
-
-function AllClinician(){
-    return(
-        <h1>List of all Clinician</h1>
-    )
 }
 
 function AddClinician(){

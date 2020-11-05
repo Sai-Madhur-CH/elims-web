@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     dashbord_logo: {
         height: "5vh",
         objectFit: "contain",
-        width: "15vh",
+        width: "30vh",
     },
     header_action: {
         display: "flex",
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export default function Header() {
+export default function Header(props) {
     const classes = useStyles();
     const history = useHistory();
     const [username, setUsername] = useState(null);
@@ -93,7 +93,7 @@ export default function Header() {
                 <Toolbar>
                 <img className={classes.dashbord_logo} src={logo} alt="ECLIMS"/>
                 <Typography variant="h6" className={classes.title}>
-                    Dashboard
+                    {props.headerName}
                 </Typography>
                 <div className={classes.header_action}>
                     <IconButton color="inherit" onClick={handleMenu}>
