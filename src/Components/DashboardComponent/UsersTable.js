@@ -78,7 +78,12 @@ export const rows = [
     "phone": 9553333333,
     "email": "clinician1@EISBIZ.NET",
     "role_name": "Clinician",
-    "status": "active"
+    "status": "active",
+    "appointments":[
+      { startDate: '2018-10-30T10:45', endDate: '2018-10-30T12:00', title: 'Meeting',roomId: 2 },
+      { startDate: '2018-11-02T09:45', endDate: '2018-11-02T11:00', title: 'Meeting',roomId: 1 },
+      { startDate: '2018-11-03T12:00', endDate: '2018-11-03T13:30', title: 'Meeting',roomId: 2 },
+    ],
   },
   {
     "user_id": 4,
@@ -109,7 +114,7 @@ export const rows = [
     "role_name": "Physician",
     "status": "active",
     "appointments":[
-      { startDate: '2018-10-30T10:45', endDate: '2018-10-30T12:00', title: 'Meeting',roomId: 1 },
+      { startDate: '2018-10-29T10:45', endDate: '2018-10-29T12:00', title: 'Meeting',roomId: 1 },
       { startDate: '2018-11-02T09:45', endDate: '2018-11-02T11:00', title: 'Meeting',roomId: 1 },
       { startDate: '2018-11-03T12:00', endDate: '2018-11-03T13:30', title: 'Meeting',roomId: 2 },
     ],
@@ -128,7 +133,12 @@ export const rows = [
     "phone": 9553333332,
     "email": "clinician2@EISBIZ.NET",
     "role_name": "Clinician",
-    "status": "active"
+    "status": "active",
+    "appointments":[
+      { startDate: '2018-10-29T10:45', endDate: '2018-10-29T12:00', title: 'Meeting',roomId: 1 },
+      { startDate: '2018-11-02T09:45', endDate: '2018-11-02T11:00', title: 'Meeting',roomId: 1 },
+      { startDate: '2018-11-03T12:00', endDate: '2018-11-03T13:00', title: 'Meeting',roomId: 2 },
+    ],
   },
   {
     "user_id": 9,
