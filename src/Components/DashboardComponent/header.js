@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     dashbord_logo: {
         height: "5vh",
         objectFit: "contain",
-        width: "30vh",
+        // width: "30vh",
     },
     header_action: {
         display: "flex",
