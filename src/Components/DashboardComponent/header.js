@@ -89,7 +89,7 @@ export default function Header(props) {
 
     return (
         <div className={classes.header}>
-            <AppBar position="static" color="secondary">
+            <AppBar position="fixed" color="secondary">
                 <Toolbar>
                 <img className={classes.dashbord_logo} src={logo} alt="ECLIMS"/>
                 <Typography variant="h6" className={classes.title}>

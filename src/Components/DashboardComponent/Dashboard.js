@@ -7,6 +7,7 @@ import MenuBar from '../DashboardComponent/MenuBar';
 import UserManagement from '../DashboardComponent/UserManagement';
 import PhysicianDashbord from '../DashboardComponent/PhysicianDashbord';
 import ClinicianDashbord from '../DashboardComponent/ClinicianDashboard';
+import SaveTests from './SaveTests';
 
 export default function Dashboard() {
 
@@ -35,9 +36,10 @@ export default function Dashboard() {
           <MenuBar link={link} handleLinkChange={handleLinkChange}/>
         </Grid>
         <Grid xs={10}>
-          {link === '/user_management' ? <UserManagement /> : null}
-          {link === '/physician_dashbord' ? <PhysicianDashbord /> : null}
-          {link === '/clinicians' ? <ClinicianDashbord /> : null}
+          {link === '/user_management' ? <UserManagement/> : null}
+          {link === '/physician_dashbord' ? <PhysicianDashbord/> : null}
+          {link === '/clinicians' ? <ClinicianDashbord/> : null}
+          {link === '/add_tests' ? <SaveTests/> : null}
         </Grid>
         
       </Grid>

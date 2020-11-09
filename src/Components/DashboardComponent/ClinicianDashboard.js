@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
         width : '99%',
-        marginTop: "3%",
+        marginTop: "7%",
     },
     heading: {
         backgroundColor: theme.palette.primary.main,
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     },
     calander:{
         objectFit:"cover",
-        maxHeight:"82vh"
+        maxHeight:'88vh',
     },
     appointment:{
         backgroundColor: theme.palette.primary.main,

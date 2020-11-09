@@ -70,9 +70,13 @@ const menuItems = {
             "url": "/clinicians"
           },
           {
-            "name": "Add Test",
-            "url": "/add_test"
+            "name": "Add Tests",
+            "url": "/add_tests"
           },
+          {
+            "name": "All Tests",
+            "url": "/tests"
+          }
         ]
       },
     ]
@@ -94,7 +98,6 @@ const menuItems = {
             if ( !children ) {
               return (
                 <List component="div" disablePadding key={ name }>
-                  {console.log('*************',url , props.link)}  
                   <ListItem
                     className={classes.item}
                     disableGutters
