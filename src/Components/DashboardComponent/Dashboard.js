@@ -8,6 +8,7 @@ import UserManagement from '../DashboardComponent/UserManagement';
 import PhysicianDashbord from '../DashboardComponent/PhysicianDashbord';
 import ClinicianDashbord from '../DashboardComponent/ClinicianDashboard';
 import SaveTests from './SaveTests';
+import AllTests from './AllTests';
 
 export default function Dashboard() {
 
@@ -40,6 +41,7 @@ export default function Dashboard() {
           {link === '/physician_dashbord' ? <PhysicianDashbord/> : null}
           {link === '/clinicians' ? <ClinicianDashbord/> : null}
           {link === '/add_tests' ? <SaveTests/> : null}
+          {link === '/tests' ? <AllTests/> : null}
         </Grid>
         
       </Grid>
