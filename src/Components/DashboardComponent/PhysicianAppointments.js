@@ -8,8 +8,11 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
-import { Button } from '@material-ui/core';
-// import { rows } from './UsersTable';
+import { Button, Grid, Typography } from '@material-ui/core';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+import IconButton from '@material-ui/core/IconButton';
+import  MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
 
 const PointerStyledTableCell = withStyles((theme) => ({
     root: {
@@ -77,6 +80,17 @@ const useStyles = makeStyles((theme) => ({
   headerFont: {
     fontFamily: theme.headerFont.fontFamily,
   },
+  gridStyle:{
+    marginTop: theme.spacing(2),
+    marginLeft: '25%',
+  },
+  textFont:{
+    fontFamily: theme.headerFont.fontFamily,
+  },
+  save:{
+      marginTop: theme.spacing(6),
+      marginRight: "10%",
+  }
 }));
 
 
@@ -94,10 +108,13 @@ const rows = {
     ],
   }
 
+const tests = ["Complete Blood Picture","Fasting Blood Suger"]
+
 export default function AppointmentsTable() {
   const classes = useStyles();
   const [filter, setfilter] =  useState('');
   const [data, setData] = useState(rows.appointments);
+  const [selectedAppointment, setselectedAppointment] = useState(null);
 
 
   const excludeColumns = ["status"];
@@ -122,10 +139,22 @@ export default function AppointmentsTable() {
   }
 
   const handleAppointments = (row) =>{
-    console.log('------------>CLICK APPOINTMENT', row);
+    setselectedAppointment(row)
   }
 
+  function formatDate(string){
+    var options = { year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric', 
+                    hour: 'numeric', 
+                    minute: 'numeric',
+                    second: 'numeric' 
+                };
+    return new Date(string).toLocaleDateString([],options);
+  }   
+
   return (
+    selectedAppointment === null ? 
     <div className={classes.root}>
     <TextField
         className={classes.margin}
@@ -159,7 +188,64 @@ export default function AppointmentsTable() {
           ))}
         </TableBody>
       </Table>
-    </TableContainer>
+    </TableContainer> 
+    </div> : <div className={classes.root}>
+    <Grid container justify="left">
+        <IconButton color="secondary" onClick={() => handleAppointments(null)}><KeyboardBackspaceIcon /></IconButton>
+    </Grid>
+    <Grid className={classes.gridStyle} container justify="space-between" xs={5}>
+        <Typography className={classes.textFont}>Patient Name :</Typography>
+        <Typography className={classes.textFont}>{selectedAppointment.patient_name}</Typography>
+    </Grid>
+    <Grid className={classes.gridStyle} container justify="space-between" xs={5}>
+        <Typography className={classes.textFont}>Patient phone :</Typography>
+        <Typography className={classes.textFont}>{selectedAppointment.phone}</Typography>
+    </Grid>
+    <Grid className={classes.gridStyle} container justify="space-between" xs={5}>
+        <Typography className={classes.textFont}>Start date : </Typography>
+        <Typography className={classes.textFont}>{formatDate(selectedAppointment.startDate)}</Typography>
+    </Grid>
+    <Grid className={classes.gridStyle} container justify="space-between" xs={5}>
+        <Typography className={classes.textFont}>End date : </Typography>
+        <Typography className={classes.textFont}>{formatDate(selectedAppointment.endDate)}</Typography>
+    </Grid>
+    <Grid className={classes.gridStyle} container justify="space-between" xs={5}>
+    <Typography className={classes.textFont}>Description : </Typography>
+    <TextField
+          className={classes.gridStyle}
+          id="outlined-multiline-static"
+          multiline
+          rows={6}
+          rowsMax={6}
+          variant="outlined"
+          placeholder="Enter observations"
+          fullWidth
+        />
+    </Grid>
+    <Grid className={classes.gridStyle} container justify="space-between" xs={5}>
+    <Typography className={classes.textFont}>Select Tests : </Typography>
+    <Select 
+    placeholder="Please select tests."  
+    id="grouped-select"
+    fullWidth
+    className={classes.gridStyle}
+    >
+    {tests.map((test, index) => (
+        <MenuItem key={index} value={test} >
+            {test}
+        </MenuItem>
+    ))}
+    </Select>
+    </Grid>
+    <Button
+    variant="contained"
+    color="primary"
+    className={classes.save}
+    // onClick={handleAdd}
+    alignItems="center"
+    >
+        Save
+    </Button>
     </div>
   );
 }
