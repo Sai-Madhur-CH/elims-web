@@ -11,6 +11,24 @@ import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core';
 // import { rows } from './UsersTable';
 
+const PointerStyledTableCell = withStyles((theme) => ({
+    root: {
+        '&:hover':{
+            cursor:"pointer",
+            textDecoration: 'underline',
+            color: theme.status.danger,
+        }
+      },
+    head: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.common.white,
+    },
+    body: {
+    fontSize: 14,
+    },
+}))(TableCell);
+
+
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.primary.main,
@@ -103,6 +121,10 @@ export default function AppointmentsTable() {
     }
   }
 
+  const handleAppointments = (row) =>{
+    console.log('------------>CLICK APPOINTMENT', row);
+  }
+
   return (
     <div className={classes.root}>
     <TextField
@@ -110,15 +132,6 @@ export default function AppointmentsTable() {
         id="input-with-icon-textfield"
         label="Appointments"
         onChange={(e) => {setfilter(e.target.value)}}
-        // InputProps={{
-        //   startAdornment: (
-        //     <InputAdornment position='end'>
-        //       <IconButton className={classes.searchbutton}>
-        //         <SearchIcon />
-        //       </IconButton>
-        //     </InputAdornment>
-        //   ),
-        // }}
       />
     <Button className={classes.searchButton} onClick={handleSearch}>Search</Button>
     <TableContainer className={classes.container} component={Paper}>
@@ -135,9 +148,9 @@ export default function AppointmentsTable() {
         <TableBody>
           {data.map((row) => (
             <StyledTableRow key={row.id}>
-              <StyledTableCell component="th" scope="row">
+              <PointerStyledTableCell component="th" scope="row"  onClick={() => handleAppointments(row)}>
                 {row.patient_name}
-              </StyledTableCell>
+              </PointerStyledTableCell>
               <StyledTableCell align="right">{row.startDate}</StyledTableCell>
               <StyledTableCell align="right">{row.endDate}</StyledTableCell>
               <StyledTableCell align="right">{row.phone}</StyledTableCell>

@@ -109,7 +109,7 @@ export default function Header(props) {
                         onClose={handleClose}
                         className={classes.menu}
                     >
-                        <MenuItem className={classes.selected} onClick={handleClose}>Profile</MenuItem>
+                        {/* <MenuItem className={classes.selected} onClick={handleClose}>Profile</MenuItem> */}
                         <MenuItem className={classes.selected} onClick={handleLogout}>Logout</MenuItem>
                     </Menu>: null }
                 </div>
