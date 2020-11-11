@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const menuItems = {
+const AdminMenu = {
     "data" : [
       {
           "name": "User Management",
@@ -78,6 +78,29 @@ const menuItems = {
             "url": "/tests"
           }
         ]
+      },
+      {
+        "name": "Receptionist",
+        "children": [
+          {
+            "name": "Appointments",
+            "url": "/appointments"
+          },
+        ]
+      },
+    ]
+  }
+
+
+  const PhysicianMenu = {
+    "data" : [
+      {
+        "name": "Calendar",
+        "url": "/calendar"
+      },
+      {
+        "name": "Appointments",
+        "url": "/physician_appointments"
       },
     ]
   }
@@ -160,7 +183,8 @@ return (
           variant="persistent"
         >
           <List {...rest} className={clsx(classes.root, className)} >
-              { handleMenu(menuItems.data) }
+              {props.roleName === 'Admin' ? handleMenu(AdminMenu.data) : null }
+              {props.roleName === 'Physician' ? handleMenu(PhysicianMenu.data) : null }
           </List>
       </Drawer>
    )

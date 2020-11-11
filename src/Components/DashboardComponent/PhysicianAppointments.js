@@ -9,6 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core';
+// import { rows } from './UsersTable';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -30,6 +31,11 @@ const StyledTableRow = withStyles((theme) => ({
 
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    width: "99%",
+    marginTop: "7%",
+  },
   table: {
     minWidth: 650,
   },
@@ -55,37 +61,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const rows = [
-  {
-    "user_id": 1,
-    "name": "Sai Madhur",
-    "phone": 9553390695,
-    "email": "ECLIMSAdmin@EISBIZ.NET",
-    "role_name": "Admin",
-    "status": "active"
-  },
-  {
-    "user_id": 2,
-    "name": "paitent1",
-    "phone": 9555555555,
-    "email": "paitent1@EISBIZ.NET",
-    "role_name": "Patient",
-    "status": "active"
-  },
-  {
-    "user_id": 3,
-    "name": "clinician1",
-    "phone": 9553333333,
-    "email": "clinician1@EISBIZ.NET",
-    "role_name": "Clinician",
-    "status": "active",
-    "appointments":[
-      { startDate: '2018-10-30T10:45', endDate: '2018-10-30T12:00', title: 'Meeting',roomId: 2 },
-      { startDate: '2018-11-02T09:45', endDate: '2018-11-02T11:00', title: 'Meeting',roomId: 1 },
-      { startDate: '2018-11-03T12:00', endDate: '2018-11-03T13:30', title: 'Meeting',roomId: 2 },
-    ],
-  },
-  {
+
+const rows = {
     "user_id": 4,
     "name": "physician1",
     "phone": 9000000031,
@@ -93,75 +70,16 @@ export const rows = [
     "role_name": "Physician",
     "status": "active",
     "appointments":[
-      { patient_name: 'paitent1',startDate: '2018-10-31T10:45', endDate: '2018-10-31T12:00', title: 'Meeting',roomId: 3 },
-      { patient_name: 'paitent1',startDate: '2018-11-01T09:45', endDate: '2018-11-01T11:00', title: 'Meeting',roomId: 1 },
-      { patient_name: 'paitent2',startDate: '2018-11-01T12:00', endDate: '2018-11-01T13:30', title: 'Meeting',roomId: 1 },
+      { id:1, patient_name: 'paitent1',startDate: '2018-10-31T10:45', endDate: '2018-10-31T12:00', title: 'Meeting',roomId: 3, phone:9553390682, status : 'In progress' },
+      { id:2, patient_name: 'paitent1',startDate: '2018-11-01T09:45', endDate: '2018-11-01T11:00', title: 'Meeting',roomId: 1, phone:9553390692, status : 'Inactive' },
+      { id:3, patient_name: 'paitent2',startDate: '2018-11-01T12:00', endDate: '2018-11-01T13:30', title: 'Meeting',roomId: 1, phone:9553390612, status : 'Active' },
     ],
-  },
-  {
-    "user_id": 5,
-    "name": "receptionist1",
-    "phone": 9000000100,
-    "email": "receptionist1@EISBIZ.NET",
-    "role_name": "Receptionist",
-    "status": "active"
-  },
-  {
-    "user_id": 6,
-    "name": "physician2",
-    "phone": 9000000031,
-    "email": "physician2@EISBIZ.NET",
-    "role_name": "Physician",
-    "status": "active",
-    "appointments":[
-      { startDate: '2018-10-29T10:45', endDate: '2018-10-29T12:00', title: 'Meeting',roomId: 1 },
-      { startDate: '2018-11-02T09:45', endDate: '2018-11-02T11:00', title: 'Meeting',roomId: 1 },
-      { startDate: '2018-11-03T12:00', endDate: '2018-11-03T13:30', title: 'Meeting',roomId: 2 },
-    ],
-  },
-  {
-    "user_id": 7,
-    "name": "receptionist2",
-    "phone": 9000000102,
-    "email": "receptionist2@EISBIZ.NET",
-    "role_name": "Receptionist",
-    "status": "active"
-  },
-  {
-    "user_id": 8,
-    "name": "clinician2",
-    "phone": 9553333332,
-    "email": "clinician2@EISBIZ.NET",
-    "role_name": "Clinician",
-    "status": "active",
-    "appointments":[
-      { startDate: '2018-10-29T10:45', endDate: '2018-10-29T12:00', title: 'Meeting',roomId: 1 },
-      { startDate: '2018-11-02T09:45', endDate: '2018-11-02T11:00', title: 'Meeting',roomId: 1 },
-      { startDate: '2018-11-03T12:00', endDate: '2018-11-03T13:00', title: 'Meeting',roomId: 2 },
-    ],
-  },
-  {
-    "user_id": 9,
-    "name": "paitent2",
-    "phone": 9555555552,
-    "email": "paitent2@EISBIZ.NET",
-    "role_name": "Patient",
-    "status": "active"
-  },
-  {
-    "user_id": 10,
-    "name": "admin2",
-    "phone": 9000000005,
-    "email": "admin2@EISBIZ.NET",
-    "role_name": "Admin",
-    "status": "active"
-  },
-];
+  }
 
-export default function Userstable() {
+export default function AppointmentsTable() {
   const classes = useStyles();
   const [filter, setfilter] =  useState('');
-  const [data, setData] = useState(rows);
+  const [data, setData] = useState(rows.appointments);
 
 
   const excludeColumns = ["status"];
@@ -186,11 +104,11 @@ export default function Userstable() {
   }
 
   return (
-    <div>
+    <div className={classes.root}>
     <TextField
         className={classes.margin}
         id="input-with-icon-textfield"
-        label="Search for user"
+        label="Appointments"
         onChange={(e) => {setfilter(e.target.value)}}
         // InputProps={{
         //   startAdornment: (
@@ -207,21 +125,21 @@ export default function Userstable() {
       <Table className={classes.table} stickyHeader aria-label="sticky table">
         <TableHead>
           <TableRow>
-            <StyledTableCell className={classes.headerFont}>User Name</StyledTableCell>
-            <StyledTableCell className={classes.headerFont} align="right">Email</StyledTableCell>
-            <StyledTableCell className={classes.headerFont} align="right">Role</StyledTableCell>
+            <StyledTableCell className={classes.headerFont}>Patient Name</StyledTableCell>
+            <StyledTableCell className={classes.headerFont} align="right">Appointment Start Date</StyledTableCell>
+            <StyledTableCell className={classes.headerFont} align="right">Appointment End Date</StyledTableCell>
             <StyledTableCell className={classes.headerFont} align="right">Phone</StyledTableCell>
             <StyledTableCell className={classes.headerFont} align="right">Status</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {data.map((row) => (
-            <StyledTableRow key={row.name}>
+            <StyledTableRow key={row.id}>
               <StyledTableCell component="th" scope="row">
-                {row.name}
+                {row.patient_name}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.email}</StyledTableCell>
-              <StyledTableCell align="right">{row.role_name}</StyledTableCell>
+              <StyledTableCell align="right">{row.startDate}</StyledTableCell>
+              <StyledTableCell align="right">{row.endDate}</StyledTableCell>
               <StyledTableCell align="right">{row.phone}</StyledTableCell>
               <StyledTableCell align="right">{row.status}</StyledTableCell>
             </StyledTableRow>
