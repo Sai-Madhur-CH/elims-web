@@ -48,12 +48,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function LabDetailsTable() {
+export default function LabTestsTable() {
   const classes = useStyles();
   const [page, setPage] = useState(1);
   const [rowsPerPage] = useState(10);
-  const [labDetails, setLabDetails] = useState([]);
-  const [totalLabDetails, setTotalLabDetails] = useState(0);
+  const [labTestsDetails, setLabDetails] = useState([]);
+  const [totalLabTestsDetails, setTotalLabTestDetails] = useState(0);
 
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
@@ -69,11 +69,11 @@ export default function LabDetailsTable() {
     params.page = page
     params.limit = rowsPerPage
     api
-    .get('/labs', {params})
+    .get('/lab_tests', {params})
     .then(res=>{
         if (res.data.status === 'success' && res.data.rows !== null){
             setLabDetails(res.data.rows)
-            setTotalLabDetails(res.data.total)
+            setTotalLabTestDetails(res.data.total)
         }
     })
   }
@@ -83,35 +83,34 @@ export default function LabDetailsTable() {
       <Table className={classes.table} stickyHeader aria-label="sticky table">
       <TableHead>
           <TableRow>
-            {/* <StyledTableCell className={classes.headerFont}>CLIA</StyledTableCell> */}
-            <StyledTableCell className={classes.headerFont}>Lab Name</StyledTableCell>
-            <StyledTableCell className={classes.headerFont} align="right">Address</StyledTableCell>
-            <StyledTableCell className={classes.headerFont} align="right">Type</StyledTableCell>
-            <StyledTableCell className={classes.headerFont} align="right">Phone</StyledTableCell>
-            <StyledTableCell className={classes.headerFont} align="right">State</StyledTableCell>
-            <StyledTableCell className={classes.headerFont} align="right">City</StyledTableCell>
-            <StyledTableCell className={classes.headerFont} align="right">Zip</StyledTableCell>
+            <StyledTableCell className={classes.headerFont}>Test Name</StyledTableCell>
+            <StyledTableCell className={classes.headerFont} align="right">Loinc</StyledTableCell>
+            <StyledTableCell className={classes.headerFont} align="right">Short Name</StyledTableCell>
+            <StyledTableCell className={classes.headerFont} align="right">Method Type</StyledTableCell>
+            <StyledTableCell className={classes.headerFont} align="right">Scale Type</StyledTableCell>
+            <StyledTableCell className={classes.headerFont} align="right">Property</StyledTableCell>
+            <StyledTableCell className={classes.headerFont} align="right">Status</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           
-          {labDetails.map((row) => (
-            <StyledTableRow key={row.lab_id}>
-              <StyledTableCell width="30%">{row.laboratory_name}</StyledTableCell>
-              <StyledTableCell  align="right">{row.address}</StyledTableCell>
-              <StyledTableCell  align="right">{row.certificate_type}</StyledTableCell>
-              <StyledTableCell  align="right">{row.phone}</StyledTableCell>
-              <StyledTableCell  align="right">{row.state}</StyledTableCell>
-              <StyledTableCell  align="right">{row.city}</StyledTableCell>
-              <StyledTableCell  align="right">{row.zip}</StyledTableCell>
+          {labTestsDetails.map((row) => (
+            <StyledTableRow key={row.loinc_num}>
+              <StyledTableCell width="35%">{row.component}</StyledTableCell>
+              <StyledTableCell  align="right">{row.loinc_num}</StyledTableCell>
+              <StyledTableCell  align="right">{row.shortname}</StyledTableCell>
+              <StyledTableCell  align="right">{row.method_typ}</StyledTableCell>
+              <StyledTableCell  align="right">{row.scale_typ}</StyledTableCell>
+              <StyledTableCell  align="right">{row.property}</StyledTableCell>
+              <StyledTableCell  align="right">{row.status}</StyledTableCell>
             </StyledTableRow>
             
           ))}   
         </TableBody>
         <TableFooter>
           <TableRow className={classes.pagination}>
-            <StyledTableCell align="right">
-            <Pagination color="primary" shape="rounded"  count={Math.ceil(totalLabDetails / rowsPerPage)} onChange={handlePageChange}/>
+            <StyledTableCell width="35%">
+            <Pagination color="primary" shape="rounded"  count={Math.ceil(totalLabTestsDetails / rowsPerPage)} onChange={handlePageChange}/>
             </StyledTableCell>
           </TableRow>
         </TableFooter>

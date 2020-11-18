@@ -7,10 +7,11 @@ import UserManagement from '../DashboardComponent/UserManagement';
 import PhysicianDashbord from '../DashboardComponent/PhysicianDashbord';
 import ClinicianDashbord from '../DashboardComponent/ClinicianDashboard';
 import SaveTests from './SaveTests';
-import AllTests from './AllTests';
+// import AllTests from './AllTests';
 import Appointments from './Appointments';
 import AppointmentsTable from './PhysicianAppointments';
 import LabDetailsTable from './LabTable';
+import LabTestsTable from './LabTestsTable';
 
 export default function Dashboard() {
 
@@ -60,7 +61,7 @@ export default function Dashboard() {
           {/* {link === '/tests' ? <AllTests/> : null} */}
           {link === '/appointments' ? <Appointments/> : null}
           {link === '/labs' ? <LabDetailsTable /> : null}
-          {link === '/lab_tests' ? <h1>LAB TESTS</h1> : null}
+          {link === '/lab_tests' ? <LabTestsTable /> : null}
           </div> : null}
           {roleName === 'Physician' ?
           <div className="roleNameDiv">
