@@ -73,10 +73,10 @@ const AdminMenu = {
             "name": "Add Tests",
             "url": "/add_tests"
           },
-          {
-            "name": "All Tests",
-            "url": "/tests"
-          }
+          // {
+          //   "name": "All Tests",
+          //   "url": "/tests"
+          // }
         ]
       },
       {
@@ -85,6 +85,19 @@ const AdminMenu = {
           {
             "name": "Appointments",
             "url": "/appointments"
+          },
+        ]
+      },
+      {
+        "name": "Lab Catalog",
+        "children": [
+          {
+            "name": "Lab Details",
+            "url": "/labs"
+          },
+          {
+            "name": "Test Details",
+            "url": "/lab_tests"
           },
         ]
       },

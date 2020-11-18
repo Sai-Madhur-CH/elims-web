@@ -133,6 +133,7 @@ export default function AppointmentsTable() {
   }
 
   const handleSearch = () => {
+    console.log('#######',filter);
     if (filter !== null || filter !== '' || filter.length > 0){
       filterData(filter)
     }
@@ -167,6 +168,7 @@ export default function AppointmentsTable() {
       <Table className={classes.table} stickyHeader aria-label="sticky table">
         <TableHead>
           <TableRow>
+            <StyledTableCell className={classes.headerFont}>Appointment ID</StyledTableCell>
             <StyledTableCell className={classes.headerFont}>Patient Name</StyledTableCell>
             <StyledTableCell className={classes.headerFont} align="right">Appointment Start Date</StyledTableCell>
             <StyledTableCell className={classes.headerFont} align="right">Appointment End Date</StyledTableCell>
@@ -177,6 +179,7 @@ export default function AppointmentsTable() {
         <TableBody>
           {data.map((row) => (
             <StyledTableRow key={row.id}>
+              <StyledTableCell align="left">{row.id}</StyledTableCell>
               <PointerStyledTableCell component="th" scope="row"  onClick={() => handleAppointments(row)}>
                 {row.patient_name}
               </PointerStyledTableCell>

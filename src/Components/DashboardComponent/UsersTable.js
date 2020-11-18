@@ -85,19 +85,19 @@ export const rows = [
       { startDate: '2018-11-03T12:00', endDate: '2018-11-03T13:30', title: 'Meeting',roomId: 2 },
     ],
   },
-  {
-    "user_id": 4,
-    "name": "physician1",
-    "phone": 9000000031,
-    "email": "physician1@EISBIZ.NET",
-    "role_name": "Physician",
-    "status": "active",
-    "appointments":[
-      { patient_name: 'paitent1',startDate: '2018-10-31T10:45', endDate: '2018-10-31T12:00', title: 'Meeting',roomId: 3 },
-      { patient_name: 'paitent1',startDate: '2018-11-01T09:45', endDate: '2018-11-01T11:00', title: 'Meeting',roomId: 1 },
-      { patient_name: 'paitent2',startDate: '2018-11-01T12:00', endDate: '2018-11-01T13:30', title: 'Meeting',roomId: 1 },
-    ],
-  },
+{
+"user_id": 4,
+"name": "physician1",
+"phone": 9000000031,
+"email": "physician1@EISBIZ.NET",
+"role_name": "Physician",
+"status": "active",
+"appointments":[
+{ patient_name: 'paitent1',startDate: '2018-10-31T10:45', endDate: '2018-10-31T12:00', title: 'Meeting',roomId: 3 },
+{ patient_name: 'paitent1',startDate: '2018-11-01T09:45', endDate: '2018-11-01T11:00', title: 'Meeting',roomId: 1 },
+{ patient_name: 'paitent2',startDate: '2018-11-01T12:00', endDate: '2018-11-01T13:30', title: 'Meeting',roomId: 1 },
+],
+},
   {
     "user_id": 5,
     "name": "receptionist1",

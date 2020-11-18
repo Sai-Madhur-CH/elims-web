@@ -10,6 +10,7 @@ import SaveTests from './SaveTests';
 import AllTests from './AllTests';
 import Appointments from './Appointments';
 import AppointmentsTable from './PhysicianAppointments';
+import LabDetailsTable from './LabTable';
 
 export default function Dashboard() {
 
@@ -56,8 +57,10 @@ export default function Dashboard() {
           {link === '/physician_dashbord' ? <PhysicianDashbord roleName={roleName}/> : null}
           {link === '/clinicians' ? <ClinicianDashbord/> : null}
           {link === '/add_tests' ? <SaveTests/> : null}
-          {link === '/tests' ? <AllTests/> : null}
+          {/* {link === '/tests' ? <AllTests/> : null} */}
           {link === '/appointments' ? <Appointments/> : null}
+          {link === '/labs' ? <LabDetailsTable /> : null}
+          {link === '/lab_tests' ? <h1>LAB TESTS</h1> : null}
           </div> : null}
           {roleName === 'Physician' ?
           <div className="roleNameDiv">

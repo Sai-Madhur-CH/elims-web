@@ -80,7 +80,6 @@ export default function Appointments() {
             'aria-label': 'change time',
           }}
         />
-
       </Grid>
     </MuiPickersUtilsProvider>
     </div>

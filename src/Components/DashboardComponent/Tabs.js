@@ -9,7 +9,7 @@ import Adduser from './UserManagement';
 import PhysicianDashbord from './PhysicianDashbord';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import ClinicianDashbord from '../DashboardComponent/ClinicianDashboard';
+import ClinicianDashbord from './ClinicianDashboard';
 
 const useStyles = makeStyles((theme) => ({
   root: {
