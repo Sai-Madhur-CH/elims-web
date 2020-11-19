@@ -10,6 +10,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {auth} from '../../Api/Api.js';
 import Pagination from '@material-ui/lab/Pagination';
+// import LabTestsTable from './LabTestsTable';
 
 
 const StyledTableCell = withStyles((theme) => ({
@@ -30,6 +31,23 @@ const StyledTableRow = withStyles((theme) => ({
     },
 }))(TableRow);
 
+const PointerStyledTableCell = withStyles((theme) => ({
+  root: {
+      '&:hover':{
+          cursor:"pointer",
+          textDecoration: 'underline',
+          color: theme.status.danger,
+      }
+    },
+  head: {
+  backgroundColor: theme.palette.primary.main,
+  color: theme.palette.common.white,
+  },
+  body: {
+  fontSize: 14,
+  },
+}))(TableCell);
+
 const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 500,
@@ -38,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     width : '99%',
     marginTop: "10%",
-    maxHeight: "80vh",
+    maxHeight: "85vh",
   },
   headerFont: {
     fontFamily: theme.headerFont.fontFamily,
@@ -48,26 +66,37 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function LabDetailsTable() {
+export default function LabDetailsTable(props) {
   const classes = useStyles();
   const [page, setPage] = useState(1);
   const [rowsPerPage] = useState(10);
   const [labDetails, setLabDetails] = useState([]);
   const [totalLabDetails, setTotalLabDetails] = useState(0);
+  // const [filters, setFilters] = useState(false);
+  // const [filterProps, setFilterProps] = useState({});
 
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
 
+  // const handleFilters = (row) => {
+  //   setFilters(true)
+  //   setFilterProps(row)
+  // }
+
   useEffect(() => {
-    getLabDetails()
+      getLabDetails(props)
   },[page])
 
-  const getLabDetails = async () => {
+  const getLabDetails = async (props) => {
     const api = await auth;
     const params = {};
     params.page = page
     params.limit = rowsPerPage
+    console.log('--------->LABS',props);
+    if (props.filterProps !== undefined){
+      params.loinc_num = props.filterProps.loinc_num
+    }
     api
     .get('/labs', {params})
     .then(res=>{
@@ -79,6 +108,7 @@ export default function LabDetailsTable() {
   }
 
   return (
+    props.filters === false ?
     <TableContainer className={classes.container} component={Paper}>
       <Table className={classes.table} stickyHeader aria-label="sticky table">
       <TableHead>
@@ -97,7 +127,9 @@ export default function LabDetailsTable() {
           
           {labDetails.map((row) => (
             <StyledTableRow key={row.lab_id}>
-              <StyledTableCell width="30%">{row.laboratory_name}</StyledTableCell>
+              <PointerStyledTableCell width="30%" onClick={() => props.handleFilters(row, !props.filters)}>
+                {row.laboratory_name}
+              </PointerStyledTableCell>
               <StyledTableCell  align="right">{row.address}</StyledTableCell>
               <StyledTableCell  align="right">{row.certificate_type}</StyledTableCell>
               <StyledTableCell  align="right">{row.phone}</StyledTableCell>
@@ -116,6 +148,6 @@ export default function LabDetailsTable() {
           </TableRow>
         </TableFooter>
       </Table>
-    </TableContainer>
+    </TableContainer> : <div onLoad={props.setLink('/lab_tests')}></div>
   );
 }

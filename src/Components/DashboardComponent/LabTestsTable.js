@@ -48,7 +48,24 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function LabTestsTable() {
+const PointerStyledTableCell = withStyles((theme) => ({
+  root: {
+      '&:hover':{
+          cursor:"pointer",
+          textDecoration: 'underline',
+          color: theme.status.danger,
+      }
+    },
+  head: {
+  backgroundColor: theme.palette.primary.main,
+  color: theme.palette.common.white,
+  },
+  body: {
+  fontSize: 14,
+  },
+}))(TableCell);
+
+export default function LabTestsTable(props) {
   const classes = useStyles();
   const [page, setPage] = useState(1);
   const [rowsPerPage] = useState(10);
@@ -60,14 +77,17 @@ export default function LabTestsTable() {
   };
 
   useEffect(() => {
-    getLabDetails()
+    getLabTestDetails(props)
   },[page])
 
-  const getLabDetails = async () => {
+  const getLabTestDetails = async (props) => {
     const api = await auth;
     const params = {};
     params.page = page
     params.limit = rowsPerPage
+    if (props.filterProps !== undefined){
+      params.lab_id = props.filterProps.lab_id
+    }
     api
     .get('/lab_tests', {params})
     .then(res=>{
@@ -79,6 +99,7 @@ export default function LabTestsTable() {
   }
 
   return (
+    props.filters === false ?
     <TableContainer className={classes.container} component={Paper}>
       <Table className={classes.table} stickyHeader aria-label="sticky table">
       <TableHead>
@@ -94,9 +115,11 @@ export default function LabTestsTable() {
         </TableHead>
         <TableBody>
           
-          {labTestsDetails.map((row) => (
-            <StyledTableRow key={row.loinc_num}>
-              <StyledTableCell width="35%">{row.component}</StyledTableCell>
+          {labTestsDetails.map((row , index) => (
+            <StyledTableRow key={index}>
+              <PointerStyledTableCell width="35%" onClick={() => props.handleFilters(row, !props.filters)}>
+                {row.component}
+              </PointerStyledTableCell>
               <StyledTableCell  align="right">{row.loinc_num}</StyledTableCell>
               <StyledTableCell  align="right">{row.shortname}</StyledTableCell>
               <StyledTableCell  align="right">{row.method_typ}</StyledTableCell>
@@ -115,6 +138,6 @@ export default function LabTestsTable() {
           </TableRow>
         </TableFooter>
       </Table>
-    </TableContainer>
+    </TableContainer> : <div onLoad={props.setLink('/labs')}></div>
   );
 }

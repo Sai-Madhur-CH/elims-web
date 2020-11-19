@@ -19,10 +19,18 @@ export default function Dashboard() {
   const [link, setLink] = useState('/user_management');
   const [headerName, setheaderName] = useState('User Management');
   const [roleName, setRoleName] = useState('');
+  const [filters, setFilters] = useState(false);
+  const [filterProps, setFilterProps] = useState({});
 
   function handleLinkChange(headername, newLink) {
     setheaderName(headername);
     setLink(newLink);
+  }
+
+  const handleFilters = (row, filters) => {
+    console.log('DASHBORD handleFilters', row, filters);
+    setFilters(filters)
+    setFilterProps(row)
   }
 
   useEffect(() => {
@@ -42,7 +50,23 @@ export default function Dashboard() {
         setheaderName('Calendar')
       }
     } 
+
+    
   }, [roleName, history]);
+
+  useEffect(() => { 
+    if (link === '/labs'){
+      setFilters(false)
+      setFilterProps({})
+      setLink(link)
+    }
+    if (link === '/lab_tests'){
+      setFilters(false)
+      setFilterProps({})
+      setLink(link)
+    }
+
+  }, [link])
 
     return (
     <div className='dashbord_div'>
@@ -60,8 +84,8 @@ export default function Dashboard() {
           {link === '/add_tests' ? <SaveTests/> : null}
           {/* {link === '/tests' ? <AllTests/> : null} */}
           {link === '/appointments' ? <Appointments/> : null}
-          {link === '/labs' ? <LabDetailsTable /> : null}
-          {link === '/lab_tests' ? <LabTestsTable /> : null}
+          {link === '/labs' ? <LabDetailsTable handleFilters={handleFilters} setLink={setLink} filters={filters} filterProps={filterProps}/> : null}
+          {link === '/lab_tests' ? <LabTestsTable handleFilters={handleFilters} setLink={setLink} filters={filters} filterProps={filterProps}/> : null}
           </div> : null}
           {roleName === 'Physician' ?
           <div className="roleNameDiv">
