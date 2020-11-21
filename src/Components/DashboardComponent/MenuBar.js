@@ -118,6 +118,19 @@ const AdminMenu = {
     ]
   }
 
+  const DemoMenu = {
+    "data" : [
+      {
+        "name": "Lab Details",
+        "url": "/labs"
+      },
+      {
+        "name": "Test Details",
+        "url": "/lab_tests"
+      },
+    ]
+  }
+
 
   export default function MenuBar(props) {
     const [ menu, setMenu ] = useState({});
@@ -198,6 +211,7 @@ return (
           <List {...rest} className={clsx(classes.root, className)} >
               {props.roleName === 'Admin' ? handleMenu(AdminMenu.data) : null }
               {props.roleName === 'Physician' ? handleMenu(PhysicianMenu.data) : null }
+              {props.roleName === 'Demo' ? handleMenu(DemoMenu.data) : null}
           </List>
       </Drawer>
    )

@@ -28,7 +28,6 @@ export default function Dashboard() {
   }
 
   const handleFilters = (row, filters) => {
-    console.log('DASHBORD handleFilters', row, filters);
     setFilters(filters)
     setFilterProps(row)
   }
@@ -48,6 +47,10 @@ export default function Dashboard() {
       else if (roleName === 'Physician'){
         setLink('/calendar')
         setheaderName('Calendar')
+      }
+      else if (roleName === 'Demo'){
+        setLink('/labs')
+        setheaderName('Lab Details')
       }
     } 
 
@@ -91,6 +94,11 @@ export default function Dashboard() {
           <div className="roleNameDiv">
           {link === '/calendar' ? <PhysicianDashbord roleName={roleName}/> : null}
           {link === '/physician_appointments' ? <AppointmentsTable/> : null}
+          </div> : null}
+          {roleName === 'Demo' ? 
+          <div className="roleNameDiv">
+          {link === '/labs' ? <LabDetailsTable handleFilters={handleFilters} setLink={setLink} filters={filters} filterProps={filterProps}/> : null}
+          {link === '/lab_tests' ? <LabTestsTable handleFilters={handleFilters} setLink={setLink} filters={filters} filterProps={filterProps}/> : null}
           </div> : null}
         </Grid>
         

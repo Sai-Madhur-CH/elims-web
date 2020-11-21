@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     width : '99%',
     marginTop: "10%",
-    maxHeight: "80vh",
+    maxHeight: "85vh",
   },
   headerFont: {
     fontFamily: theme.headerFont.fontFamily,
