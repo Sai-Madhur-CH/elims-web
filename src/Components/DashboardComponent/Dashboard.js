@@ -87,7 +87,7 @@ export default function Dashboard() {
           {link === '/clinicians' ? <ClinicianDashbord roleName={roleName}/> : null}
           {link === '/add_tests' ? <SaveTests/> : null}
           {/* {link === '/tests' ? <AllTests/> : null} */}
-          {link === '/appointments' ? <Appointments/> : null}
+          {link === '/add_appointment' ? <Appointments/> : null}
           {link === '/labs' ? <LabDetailsTable handleFilters={handleFilters} setLink={setLink} filters={filters} filterProps={filterProps}/> : null}
           {link === '/lab_tests' ? <LabTestsTable handleFilters={handleFilters} setLink={setLink} filters={filters} filterProps={filterProps}/> : null}
           </div> : null}

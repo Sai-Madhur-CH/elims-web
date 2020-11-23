@@ -83,8 +83,8 @@ const AdminMenu = {
         "name": "Receptionist",
         "children": [
           {
-            "name": "Appointments",
-            "url": "/appointments"
+            "name": "Appointment",
+            "url": "/add_appointment"
           },
         ]
       },
