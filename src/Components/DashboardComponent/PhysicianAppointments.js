@@ -9,10 +9,10 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import { Button, Grid, Typography } from '@material-ui/core';
-import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
-import IconButton from '@material-ui/core/IconButton';
 import  MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
+import XRay from "../../Assets/XRay.pdf";
+import Report from "../../Assets/Lab_report.pdf";
 
 const PointerStyledTableCell = withStyles((theme) => ({
     root: {
@@ -62,6 +62,13 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     maxHeight: "70vh",
+    width : '99%',
+  },
+  tableContainer: {
+    flexGrow: 1,
+    width : '99%',
+    marginTop: "5%",
+    maxHeight: "85vh",
   },
   margin: {
     margin: theme.spacing(1),
@@ -81,8 +88,8 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: theme.headerFont.fontFamily,
   },
   gridStyle:{
-    marginTop: theme.spacing(2),
-    marginLeft: '25%',
+    marginTop: theme.spacing(5),
+    // marginLeft: '10%',
   },
   textFont:{
     fontFamily: theme.headerFont.fontFamily,
@@ -90,6 +97,9 @@ const useStyles = makeStyles((theme) => ({
   save:{
       marginTop: theme.spacing(6),
       marginRight: "10%",
+  },
+  topspacing:{
+    marginTop: theme.spacing(3),
   }
 }));
 
@@ -115,9 +125,8 @@ export default function AppointmentsTable() {
   const [filter, setfilter] =  useState('');
   const [data, setData] = useState(rows.appointments);
   const [selectedAppointment, setselectedAppointment] = useState(null);
-
-
   const excludeColumns = ["status"];
+  const [selectedLab, setSelectedLab] = useState('Report');
   
   function filterData(value)  {
     const lowercasedValue = value.toLowerCase().trim();
@@ -133,7 +142,6 @@ export default function AppointmentsTable() {
   }
 
   const handleSearch = () => {
-    console.log('#######',filter);
     if (filter !== null || filter !== '' || filter.length > 0){
       filterData(filter)
     }
@@ -193,62 +201,121 @@ export default function AppointmentsTable() {
       </Table>
     </TableContainer> 
     </div> : <div className={classes.root}>
-    <Grid container justify="left">
+    {/* <Grid container justify="left">
         <IconButton color="secondary" onClick={() => handleAppointments(null)}><KeyboardBackspaceIcon /></IconButton>
-    </Grid>
-    <Grid className={classes.gridStyle} container justify="space-between" xs={5}>
+    </Grid> */}
+    <Grid container justify="space-between" spacing={12}>
+    <Grid container className={classes.gridStyle}  xs={5}>
+        <Grid className={classes.topspacing} xs={5}>
         <Typography className={classes.textFont}>Patient Name :</Typography>
+        </Grid>
+        <Grid className={classes.topspacing} xs={5}>
         <Typography className={classes.textFont}>{selectedAppointment.patient_name}</Typography>
-    </Grid>
-    <Grid className={classes.gridStyle} container justify="space-between" xs={5}>
+        </Grid>
+        <Grid className={classes.topspacing} xs={5}>
         <Typography className={classes.textFont}>Patient phone :</Typography>
+        </Grid>
+        <Grid className={classes.topspacing} xs={5}>
         <Typography className={classes.textFont}>{selectedAppointment.phone}</Typography>
-    </Grid>
-    <Grid className={classes.gridStyle} container justify="space-between" xs={5}>
+        </Grid>
+        <Grid className={classes.topspacing} xs={5}>
         <Typography className={classes.textFont}>Start date : </Typography>
+        </Grid>
+        <Grid className={classes.topspacing} xs={7}>
         <Typography className={classes.textFont}>{formatDate(selectedAppointment.startDate)}</Typography>
-    </Grid>
-    <Grid className={classes.gridStyle} container justify="space-between" xs={5}>
+        </Grid>
+        <Grid className={classes.topspacing} xs={5}>
         <Typography className={classes.textFont}>End date : </Typography>
+        </Grid>
+        <Grid className={classes.topspacing} xs={7}>
         <Typography className={classes.textFont}>{formatDate(selectedAppointment.endDate)}</Typography>
+        </Grid>
+        <Grid className={classes.topspacing} xs={5}>
+        <Typography className={classes.textFont}>Description : </Typography>
+        </Grid>
+        <Grid className={classes.topspacing} xs={7}>
+        <TextField
+              className={classes.gridStyle}
+              id="outlined-multiline-static"
+              multiline
+              rows={6}
+              rowsMax={6}
+              variant="outlined"
+              placeholder="Enter observations"
+              fullWidth
+            />
+        </Grid>
+        <Grid className={classes.topspacing} xs={5}>
+        <Typography className={classes.textFont}>Select Tests : </Typography>
+        </Grid>
+        <Grid className={classes.topspacing} xs={7}>
+        <Select 
+        placeholder="Please select tests."  
+        id="grouped-select"
+        fullWidth
+        className={classes.gridStyle}
+        >
+        {tests.map((test, index) => (
+            <MenuItem key={index} value={test} >
+                {test}
+            </MenuItem>
+        ))}
+        </Select>
+        </Grid>
+        <Grid  xs={5}>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.save}
+            alignItems="center"
+            onClick={() => handleAppointments(null)}
+            >
+              Back
+          </Button>
+        </Grid>
+        <Grid  xs={5}>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.save}
+            alignItems="center"
+            >
+              Save
+          </Button>
+        </Grid>
     </Grid>
-    <Grid className={classes.gridStyle} container justify="space-between" xs={5}>
-    <Typography className={classes.textFont}>Description : </Typography>
-    <TextField
-          className={classes.gridStyle}
-          id="outlined-multiline-static"
-          multiline
-          rows={6}
-          rowsMax={6}
-          variant="outlined"
-          placeholder="Enter observations"
-          fullWidth
-        />
+    <Grid className={classes.topspacing} xs={6}>
+    <TableContainer className={classes.tableContainer} component={Paper} >
+      <Table className={classes.table} stickyHeader aria-label="sticky table">
+      <TableHead>
+          <TableRow>
+            <StyledTableCell className={classes.headerFont}>List of Reports</StyledTableCell>
+          </TableRow>
+      </TableHead>
+      <TableBody>
+      <StyledTableRow>
+        <PointerStyledTableCell width="20%" onClick={() => setSelectedLab('Report')}>
+          Complete Blood Picture
+        </PointerStyledTableCell>
+        </StyledTableRow>
+      <StyledTableRow>
+        <PointerStyledTableCell width="20%" onClick={() => setSelectedLab('XRay')}>
+          X-Ray
+        </PointerStyledTableCell>
+        </StyledTableRow>
+      </TableBody>
+      </Table>
+    </TableContainer>
+    {selectedLab === 'XRay' ?
+    <Grid className={classes.topspacing} xs={12}>
+    <object width="100%" height="400" data={XRay} type="application/pdf" aria-label="this object has text" />
+    </Grid> : null }
+    {selectedLab === 'Report' ?
+    <Grid className={classes.topspacing} xs={12}>
+    <object width="100%" height="400" data={Report} type="application/pdf" aria-label="this object has text" />
+    </Grid> : null }
     </Grid>
-    <Grid className={classes.gridStyle} container justify="space-between" xs={5}>
-    <Typography className={classes.textFont}>Select Tests : </Typography>
-    <Select 
-    placeholder="Please select tests."  
-    id="grouped-select"
-    fullWidth
-    className={classes.gridStyle}
-    >
-    {tests.map((test, index) => (
-        <MenuItem key={index} value={test} >
-            {test}
-        </MenuItem>
-    ))}
-    </Select>
     </Grid>
-    <Button
-    variant="contained"
-    color="primary"
-    className={classes.save}
-    // onClick={handleAdd}
-    alignItems="center"
-    >
-        Save
-    </Button>
     </div>
   );
 }
