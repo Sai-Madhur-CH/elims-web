@@ -10,11 +10,8 @@ import {
 } from '@material-ui/pickers';
 import { toast } from 'react-toastify';
 import TextField from '@material-ui/core/TextField';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import { Button } from '@material-ui/core';
+import { MultipleSelect } from "react-select-material-ui";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -25,10 +22,7 @@ const useStyles = makeStyles((theme) => ({
     inputWidth:{
       minWidth: "20%",
       minHeight: "65px",
-    },
-    multiSelect:{
-      chips: { background: "red" }, 
-      searchBox: { border: "none", "border-bottom": "1px solid blue", "border-radius": "0px" }
+      maxWidth: "20%",
     },
     formControl: {
       margin: theme.spacing(2),
@@ -45,9 +39,14 @@ export default function Appointments() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [fromTime, setFromTime] = useState(new Date());
   const [toTime, setToTime] = useState(new Date());
-  const [selectPhy, setPhy] = useState(['Physician 1', 'Physician 2','Physician 3'])
-  const [selectClinician, setClin] =  useState(['Clinician 1', 'Clinician 2','Clinician 3'])
-  const [selectTest, setTest] = useState(['Test 1', 'Test 2','Test 3'])
+  const physicainsOptions = ["Physician 1", "Physician 2", "Physician 3", "Physician 4"];
+  const clinicianOptions = ["Clinician 1", "Clinician 2", "Clinician 3", "Clinician 4"];
+  const testOptions = ["Test 1", "Test 2", "Test 3", "Test 4"];
+  const [selectedPhysician, setSelectedPhysician] = useState([]);
+  const [selectedClinician, setSelectedClinician] = useState([]);
+  const [selectedTests, setSelectedTests] = useState([]);
+
+
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -67,31 +66,16 @@ export default function Appointments() {
     }
   }
 
-  const handleMultiSelectChange  = (event) => {
-    const name = event.target.name;
-    setPhy({
-      ...selectPhy,
-      [name]: event.target.value,
-    });
-    console.log(selectPhy);
+  const handleSelectPhysicians = (values) => {
+    setSelectedPhysician(values)
   };
 
-  const handleClinicianMultiSelectChange  = (event) => {
-    const name = event.target.name;
-    setClin({
-      ...selectPhy,
-      [name]: event.target.value,
-    });
-    console.log(selectPhy);
+  const handleSelectClinician = (values) => {
+    setSelectedClinician(values)
   };
 
-  const handleTestsMultiSelectChange  = (event) => {
-    const name = event.target.name;
-    setTest({
-      ...selectPhy,
-      [name]: event.target.value,
-    });
-    console.log(selectPhy);
+  const handleSelectTests = (values) => {
+    setSelectedTests(values)
   };
 
   return (
@@ -161,62 +145,47 @@ export default function Appointments() {
       </Grid>
       
       <Grid container justify="space-around" >
-      <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="native-simple">Select Physician</InputLabel>
-        <Select
-          native
-          value={selectPhy.physician}
-          onChange={handleMultiSelectChange}
-          inputProps={{
-            name: 'physician',
-            id: 'native-simple',
-          }}
-        >
-          <option aria-label="None" value="" />
-          <option value={'Physician 1'}>Physician 1</option>
-          <option value={'Physician 2'}>Physician 2</option>
-          <option value={'Physician 3'}>Physician 3</option>
-        </Select>
-        <FormHelperText>Please Select Physician</FormHelperText>
-      </FormControl>
-      
-      <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="native-simple">Select Clinician</InputLabel>
-        <Select
-          native
-          value={selectClinician.clinician}
-          onChange={handleClinicianMultiSelectChange}
-          inputProps={{
-            name: 'clinician',
-            id: 'native-simple',
-          }}
-        >
-          <option aria-label="None" value="" />
-          <option value={'Clinician 1'}>Clinician 1</option>
-          <option value={'Clinician 2'}>Clinician 2</option>
-          <option value={'Clinician 3'}>Clinician 3</option>
-        </Select>
-        <FormHelperText>Please Select Clinician</FormHelperText>
-      </FormControl>
 
-      <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="native-simple">Select Tests</InputLabel>
-        <Select
-          native
-          value={selectTest.tests}
-          onChange={handleTestsMultiSelectChange}
-          inputProps={{
-            name: 'tests',
-            id: 'native-simple',
-          }}
-        >
-          <option aria-label="None" value="" />
-          <option value={'Test 1'}>Test 1</option>
-          <option value={'Test 2'}>Test 2</option>
-          <option value={'Test 3'}>Test 3</option>
-        </Select>
-        <FormHelperText>Please Select Tests</FormHelperText>
-      </FormControl>
+      <MultipleSelect
+        className={classes.inputWidth}
+        label="Choose physicians"
+        values={selectedPhysician}
+        options={physicainsOptions}
+        helperText="You can add a new physician by writing its name and pressing enter"
+        onChange={handleSelectPhysicians}
+        SelectProps={{
+          msgNoOptionsAvailable: "All physician are selected",
+          msgNoOptionsMatchFilter: "No physician matches the filter",
+        }}
+      />
+
+      <MultipleSelect
+        className={classes.inputWidth}
+        label="Choose clinicians"
+        values={selectedClinician}
+        options={clinicianOptions}
+        helperText="You can add a new clinician by writing its name and pressing enter"
+        onChange={handleSelectClinician}
+        SelectProps={{
+          msgNoOptionsAvailable: "All Clinicians are selected",
+          msgNoOptionsMatchFilter: "No Clinicians matches the filter",
+        }}
+      />
+
+
+      <MultipleSelect
+        className={classes.inputWidth}
+        label="Choose tests"
+        values={selectedTests}
+        options={testOptions}
+        helperText="You can add a new tests by writing its name and pressing enter"
+        onChange={handleSelectTests}
+        SelectProps={{
+          msgNoOptionsAvailable: "All tests are selected",
+          msgNoOptionsMatchFilter: "No tests matches the filter",
+        }}
+      />
+      
 
       </Grid>
       <Grid>
