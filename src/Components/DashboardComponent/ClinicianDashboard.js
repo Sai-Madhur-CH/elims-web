@@ -104,19 +104,28 @@ function filterData(list, value, excludeColumns)  {
 const clinician_list = filterData(rows, 'clinician',["status","name"]);
 
 
-export default function ClinicianDashbord() {
+export default function ClinicianDashbord(props) {
     const classes = useStyles();
     const [filter, setfilter] =  useState('');
     const [clinicians, setClinician] = useState(clinician_list);
     const [selected, setSelected] = useState({});
     const [currentViewName, setViewName ] = useState('');
+    const [gridXs, setGridXs] = useState(9);
+
 
     useEffect(() => {
-        if (filter !== null || filter !== ''){
+        if (props.roleName === 'Admin' && (filter !== null || filter !== '') ){
             let data = clinician_list
             setClinician(filterData(data,filter, ["status"]))
+            setGridXs(9)
         }
-      },[filter]);
+        else if (props.roleName === 'Clinicians'){
+            setGridXs(12)
+            setClinician(clinician_list[0])
+            setSelected(clinician_list[0])
+        }
+
+      },[props.roleName, filter]);
 
     const handleSearch = (e) => {
         setfilter(e.target.value)
@@ -144,6 +153,7 @@ export default function ClinicianDashbord() {
     return(
     <Paper>
         <Grid container className={classes.root} spacing={2}>
+        {props.roleName === 'Admin' ?
             <Grid item xs={3}>
                 <Typography  className={classes.heading}>All Clinicians</Typography>
                 <TextField
@@ -165,9 +175,9 @@ export default function ClinicianDashbord() {
                     </FixedSizeList>
                 </div>
                 
-            </Grid>
+            </Grid>: null}
             
-            <Grid className={classes.calander} item xs={9}>
+            <Grid className={classes.calander} item xs={gridXs}>
                 <Scheduler 
                 data={selected.appointments}
                 >

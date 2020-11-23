@@ -131,6 +131,19 @@ const AdminMenu = {
     ]
   }
 
+  const ClinicianMenu = {
+    "data" : [
+      {
+        "name": "Calendar",
+        "url": "/calendar"
+      },
+      {
+        "name": "Appointments",
+        "url": "/clinician_appointments"
+      },
+    ]
+  }
+
 
   export default function MenuBar(props) {
     const [ menu, setMenu ] = useState({});
@@ -212,6 +225,7 @@ return (
               {props.roleName === 'Admin' ? handleMenu(AdminMenu.data) : null }
               {props.roleName === 'Physician' ? handleMenu(PhysicianMenu.data) : null }
               {props.roleName === 'Demo' ? handleMenu(DemoMenu.data) : null}
+              {props.roleName === 'Clinicians' ? handleMenu(ClinicianMenu.data) : null}
           </List>
       </Drawer>
    )

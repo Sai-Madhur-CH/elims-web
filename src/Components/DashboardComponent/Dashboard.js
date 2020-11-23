@@ -12,6 +12,7 @@ import Appointments from './Appointments';
 import AppointmentsTable from './PhysicianAppointments';
 import LabDetailsTable from './LabTable';
 import LabTestsTable from './LabTestsTable';
+import ClinicianAppointmentsTable from './ClinicianAppointments';
 
 export default function Dashboard() {
 
@@ -44,7 +45,7 @@ export default function Dashboard() {
         setLink('/user_management')
         setheaderName('User Management')
       }
-      else if (roleName === 'Physician'){
+      else if (roleName === 'Physician' || roleName === 'Clinicians'){
         setLink('/calendar')
         setheaderName('Calendar')
       }
@@ -83,7 +84,7 @@ export default function Dashboard() {
           <div className="roleNameDiv">
           {link === '/user_management' ? <UserManagement/> : null}
           {link === '/physician_dashbord' ? <PhysicianDashbord roleName={roleName}/> : null}
-          {link === '/clinicians' ? <ClinicianDashbord/> : null}
+          {link === '/clinicians' ? <ClinicianDashbord roleName={roleName}/> : null}
           {link === '/add_tests' ? <SaveTests/> : null}
           {/* {link === '/tests' ? <AllTests/> : null} */}
           {link === '/appointments' ? <Appointments/> : null}
@@ -100,8 +101,12 @@ export default function Dashboard() {
           {link === '/labs' ? <LabDetailsTable handleFilters={handleFilters} setLink={setLink} filters={filters} filterProps={filterProps}/> : null}
           {link === '/lab_tests' ? <LabTestsTable handleFilters={handleFilters} setLink={setLink} filters={filters} filterProps={filterProps}/> : null}
           </div> : null}
+          {roleName === 'Clinicians' ?
+          <div className="roleNameDiv">
+          {link === '/calendar' ? <ClinicianDashbord roleName={roleName}/> : null}
+          {link === '/clinician_appointments' ? <ClinicianAppointmentsTable/> : null}
+          </div> : null}
         </Grid>
-        
       </Grid>
       
     </div>
