@@ -9,10 +9,10 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import { Button, Grid, Typography } from '@material-ui/core';
-import  MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
 import XRay from "../../Assets/XRay.pdf";
 import Report from "../../Assets/Lab_report.pdf";
+import { MultipleSelect } from "react-select-material-ui";
+
 
 const PointerStyledTableCell = withStyles((theme) => ({
     root: {
@@ -89,7 +89,6 @@ const useStyles = makeStyles((theme) => ({
   },
   gridStyle:{
     marginTop: theme.spacing(5),
-    // marginLeft: '10%',
   },
   textFont:{
     fontFamily: theme.headerFont.fontFamily,
@@ -100,7 +99,24 @@ const useStyles = makeStyles((theme) => ({
   },
   topspacing:{
     marginTop: theme.spacing(3),
-  }
+  },
+  topspacingNewGrid:{
+    marginTop: theme.spacing(10),
+    maxHeight: "82vh",
+    // marginRight: theme.spacing(5),
+  },
+  topSpacingMultiSelect:{
+    marginTop: theme.spacing(6),
+  },
+  pdfReport:{
+    marginTop: theme.spacing(4),
+    width: '95%',
+    height : '650px',
+  },
+  topSpacingBackButton:{
+    marginTop: theme.spacing(10),
+    marginRight: "88%"
+  },
 }));
 
 
@@ -112,13 +128,11 @@ const rows = {
     "role_name": "Physician",
     "status": "active",
     "appointments":[
-      { id:1, patient_name: 'paitent1',startDate: '2018-10-31T10:45', endDate: '2018-10-31T12:00', title: 'Meeting',roomId: 3, phone:9553390682, status : 'In progress' },
-      { id:2, patient_name: 'paitent1',startDate: '2018-11-01T09:45', endDate: '2018-11-01T11:00', title: 'Meeting',roomId: 1, phone:9553390692, status : 'Inactive' },
-      { id:3, patient_name: 'paitent2',startDate: '2018-11-01T12:00', endDate: '2018-11-01T13:30', title: 'Meeting',roomId: 1, phone:9553390612, status : 'Active' },
+      { id:1, patient_name: 'paitent1',startDate: '2018-10-31T10:45', endDate: '2018-10-31T12:00', title: 'Meeting',roomId: 3, phone:9553390682, report_status : 'Ready for Review', selectedTests : ["Complete Blood Picture", "X-Ray"] },
+      { id:2, patient_name: 'paitent1',startDate: '2018-11-01T09:45', endDate: '2018-11-01T11:00', title: 'Meeting',roomId: 1, phone:9553390692, report_status : 'In Progress' },
+      { id:3, patient_name: 'paitent2',startDate: '2018-11-01T12:00', endDate: '2018-11-01T13:30', title: 'Meeting',roomId: 1, phone:9553390612, report_status : 'Completed', description:'Everything looks normal as per the test reports.', selectedTests : ["Complete Blood Picture", "X-Ray"] },
     ],
   }
-
-const tests = ["Complete Blood Picture","Fasting Blood Suger"]
 
 export default function AppointmentsTable() {
   const classes = useStyles();
@@ -126,7 +140,10 @@ export default function AppointmentsTable() {
   const [data, setData] = useState(rows.appointments);
   const [selectedAppointment, setselectedAppointment] = useState(null);
   const excludeColumns = ["status"];
-  const [selectedLab, setSelectedLab] = useState('Report');
+  const [selectedLab, setSelectedLab] = useState(null);
+  const testOptions = ["Complete Blood Picture", "X-Ray", "Lipid Panel", "Fasting Blood Suger"];
+  const [selectedTests, setSelectedTests] = useState([]);
+
   
   function filterData(value)  {
     const lowercasedValue = value.toLowerCase().trim();
@@ -149,6 +166,9 @@ export default function AppointmentsTable() {
 
   const handleAppointments = (row) =>{
     setselectedAppointment(row)
+    if (row && row.selectedTests ){
+      setSelectedTests(row.selectedTests)
+    }
   }
 
   function formatDate(string){
@@ -161,6 +181,19 @@ export default function AppointmentsTable() {
                 };
     return new Date(string).toLocaleDateString([],options);
   }   
+
+  const handleSelectTests = (values) => {
+    setSelectedTests(values)
+  };
+
+  const handleDiscription = (e) => {
+    if (e.target.value){
+      const appointment = selectedAppointment
+      appointment['description'] = e.target.value
+      setselectedAppointment(appointment)
+    }
+  }
+
 
   return (
     selectedAppointment === null ? 
@@ -178,10 +211,9 @@ export default function AppointmentsTable() {
           <TableRow>
             <StyledTableCell className={classes.headerFont}>Appointment ID</StyledTableCell>
             <StyledTableCell className={classes.headerFont}>Patient Name</StyledTableCell>
-            <StyledTableCell className={classes.headerFont} align="right">Appointment Start Date</StyledTableCell>
-            <StyledTableCell className={classes.headerFont} align="right">Appointment End Date</StyledTableCell>
+            <StyledTableCell className={classes.headerFont} align="right">Appointment Due Date</StyledTableCell>
             <StyledTableCell className={classes.headerFont} align="right">Phone</StyledTableCell>
-            <StyledTableCell className={classes.headerFont} align="right">Status</StyledTableCell>
+            <StyledTableCell className={classes.headerFont} align="right">Report Status</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -191,19 +223,16 @@ export default function AppointmentsTable() {
               <PointerStyledTableCell component="th" scope="row"  onClick={() => handleAppointments(row)}>
                 {row.patient_name}
               </PointerStyledTableCell>
-              <StyledTableCell align="right">{row.startDate}</StyledTableCell>
-              <StyledTableCell align="right">{row.endDate}</StyledTableCell>
+              <StyledTableCell align="right">{formatDate(row.startDate)}</StyledTableCell>
               <StyledTableCell align="right">{row.phone}</StyledTableCell>
-              <StyledTableCell align="right">{row.status}</StyledTableCell>
+              <StyledTableCell align="right">{row.report_status}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer> 
-    </div> : <div className={classes.root}>
-    {/* <Grid container justify="left">
-        <IconButton color="secondary" onClick={() => handleAppointments(null)}><KeyboardBackspaceIcon /></IconButton>
-    </Grid> */}
+    </div> : selectedLab === null ? 
+    <div className={classes.root}>
     <Grid container justify="space-between" spacing={12}>
     <Grid container className={classes.gridStyle}  xs={5}>
         <Grid className={classes.topspacing} xs={5}>
@@ -219,69 +248,10 @@ export default function AppointmentsTable() {
         <Typography className={classes.textFont}>{selectedAppointment.phone}</Typography>
         </Grid>
         <Grid className={classes.topspacing} xs={5}>
-        <Typography className={classes.textFont}>Start date : </Typography>
+        <Typography className={classes.textFont}>Appointment date : </Typography>
         </Grid>
         <Grid className={classes.topspacing} xs={7}>
         <Typography className={classes.textFont}>{formatDate(selectedAppointment.startDate)}</Typography>
-        </Grid>
-        <Grid className={classes.topspacing} xs={5}>
-        <Typography className={classes.textFont}>End date : </Typography>
-        </Grid>
-        <Grid className={classes.topspacing} xs={7}>
-        <Typography className={classes.textFont}>{formatDate(selectedAppointment.endDate)}</Typography>
-        </Grid>
-        <Grid className={classes.topspacing} xs={5}>
-        <Typography className={classes.textFont}>Description : </Typography>
-        </Grid>
-        <Grid className={classes.topspacing} xs={7}>
-        <TextField
-              className={classes.gridStyle}
-              id="outlined-multiline-static"
-              multiline
-              rows={6}
-              rowsMax={6}
-              variant="outlined"
-              placeholder="Enter observations"
-              fullWidth
-            />
-        </Grid>
-        <Grid className={classes.topspacing} xs={5}>
-        <Typography className={classes.textFont}>Select Tests : </Typography>
-        </Grid>
-        <Grid className={classes.topspacing} xs={7}>
-        <Select 
-        placeholder="Please select tests."  
-        id="grouped-select"
-        fullWidth
-        className={classes.gridStyle}
-        >
-        {tests.map((test, index) => (
-            <MenuItem key={index} value={test} >
-                {test}
-            </MenuItem>
-        ))}
-        </Select>
-        </Grid>
-        <Grid  xs={5}>
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.save}
-            alignItems="center"
-            onClick={() => handleAppointments(null)}
-            >
-              Back
-          </Button>
-        </Grid>
-        <Grid  xs={5}>
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.save}
-            alignItems="center"
-            >
-              Save
-          </Button>
         </Grid>
     </Grid>
     <Grid className={classes.topspacing} xs={6}>
@@ -306,16 +276,79 @@ export default function AppointmentsTable() {
       </TableBody>
       </Table>
     </TableContainer>
+    </Grid>
+    </Grid>
+    <Grid container justify="space-evenly" spacing={12}>
+    <Grid className={classes.topspacing} xs={2}>
+        <Typography className={classes.textFont}>Description : </Typography>
+        </Grid>
+        <Grid className={classes.topspacing} xs={9}>
+        <TextField
+              className={classes.gridStyle}
+              id="outlined-multiline-static"
+              multiline
+              rows={6}
+              rowsMax={6}
+              variant="outlined"
+              placeholder="Enter observations"
+              value={selectedAppointment.description ? selectedAppointment.description : null}
+              onChange={handleDiscription}
+              fullWidth
+            />
+        </Grid>
+        <Grid className={classes.topspacingNewGrid} xs={2}>
+        <Typography className={classes.textFont}>Choose Tests : </Typography>
+        </Grid>
+        <Grid className={classes.topSpacingMultiSelect} xs={9}>
+          <MultipleSelect
+            className={classes.inputWidth}
+            label="Choose tests"
+            values={selectedTests}
+            options={testOptions}
+            helperText="You can add a new tests by writing its name and pressing enter"
+            onChange={handleSelectTests}
+            SelectProps={{
+              msgNoOptionsAvailable: "All tests are selected",
+              msgNoOptionsMatchFilter: "No tests matches the filter",
+            }}
+          />
+        </Grid>
+        <Grid  xs={5}>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.save}
+            alignItems="center"
+            onClick={() => handleAppointments(null)}
+            >
+              Back
+          </Button>
+        </Grid>
+        <Grid  xs={5}>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.save}
+            alignItems="center"
+            >
+              Save
+          </Button>
+        </Grid>
+    </Grid>
+    </div>:<div>
+    <Button 
+      variant="contained"
+      color="primary"
+      className={classes.topSpacingBackButton}
+      onClick={() => setSelectedLab(null)}
+      >Back</Button>
     {selectedLab === 'XRay' ?
-    <Grid className={classes.topspacing} xs={12}>
-    <object width="100%" height="400" data={XRay} type="application/pdf" aria-label="this object has text" />
-    </Grid> : null }
+    <object className={classes.pdfReport}  data={XRay} type="application/pdf" aria-label="this object has text" />
+    : null }
     {selectedLab === 'Report' ?
-    <Grid className={classes.topspacing} xs={12}>
-    <object width="100%" height="400" data={Report} type="application/pdf" aria-label="this object has text" />
-    </Grid> : null }
-    </Grid>
-    </Grid>
+    <object className={classes.pdfReport}  data={Report} type="application/pdf" aria-label="this object has text" />
+     : null }
     </div>
+
   );
 }
