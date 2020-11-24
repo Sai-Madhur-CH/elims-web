@@ -46,8 +46,6 @@ export default function Appointments() {
   const [selectedClinician, setSelectedClinician] = useState([]);
   const [selectedTests, setSelectedTests] = useState([]);
 
-
-
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
@@ -100,7 +98,6 @@ export default function Appointments() {
           id="standard-basic"
           label="Patient Email"
           helperText="Enter Patient Email"
-          type="number"
         />
       </Grid>
 

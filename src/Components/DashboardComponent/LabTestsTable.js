@@ -10,6 +10,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {auth} from '../../Api/Api.js';
 import Pagination from '@material-ui/lab/Pagination';
+import TextField from '@material-ui/core/TextField';
 
 
 const StyledTableCell = withStyles((theme) => ({
@@ -37,15 +38,20 @@ const useStyles = makeStyles((theme) => ({
   container: {
     flexGrow: 1,
     width : '99%',
-    marginTop: "10%",
-    maxHeight: "85vh",
+    marginTop: "15px",
+    maxHeight: "82vh",
   },
   headerFont: {
     fontFamily: theme.headerFont.fontFamily,
   },
   pagination:{
       height: theme.spacing(7),
-  }
+  },
+  margin: {
+    marginTop: theme.spacing(9),
+    left: "30%",
+    minWidth: "30%",
+  },
 }));
 
 const PointerStyledTableCell = withStyles((theme) => ({
@@ -71,6 +77,7 @@ export default function LabTestsTable(props) {
   const [rowsPerPage] = useState(10);
   const [labTestsDetails, setLabDetails] = useState([]);
   const [totalLabTestsDetails, setTotalLabTestDetails] = useState(0);
+  const [filter, setFilter] = useState('');
 
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
@@ -80,6 +87,12 @@ export default function LabTestsTable(props) {
     getLabTestDetails(props)
   },[page])
 
+  useEffect(() =>{
+    if (filter.length >=3 || filter.length === 0){
+      getLabTestDetails(props)
+    }
+  },[filter])
+
   const getLabTestDetails = async (props) => {
     const api = await auth;
     const params = {};
@@ -87,6 +100,9 @@ export default function LabTestsTable(props) {
     params.limit = rowsPerPage
     if (props.filterProps !== undefined){
       params.lab_id = props.filterProps.lab_id
+    }
+    if (filter.length >= 3){
+      params.search = filter
     }
     api
     .get('/lab_tests', {params})
@@ -100,6 +116,13 @@ export default function LabTestsTable(props) {
 
   return (
     props.filters === false ?
+    <div>
+    <TextField
+        className={classes.margin}
+        id="input-with-icon-textfield"
+        label="Search for Tests"
+        onChange={(e) => {setFilter(e.target.value)}}
+    />
     <TableContainer className={classes.container} component={Paper}>
       <Table className={classes.table} stickyHeader aria-label="sticky table">
       <TableHead>
@@ -138,6 +161,7 @@ export default function LabTestsTable(props) {
           </TableRow>
         </TableFooter>
       </Table>
-    </TableContainer> : <div onLoad={props.setLink('/labs')}></div>
+    </TableContainer>
+    </div> : <div onLoad={props.setLink('/labs')}></div>
   );
 }

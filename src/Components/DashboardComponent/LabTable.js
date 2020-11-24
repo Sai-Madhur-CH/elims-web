@@ -10,7 +10,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {auth} from '../../Api/Api.js';
 import Pagination from '@material-ui/lab/Pagination';
-// import LabTestsTable from './LabTestsTable';
+import TextField from '@material-ui/core/TextField';
 
 
 const StyledTableCell = withStyles((theme) => ({
@@ -55,15 +55,20 @@ const useStyles = makeStyles((theme) => ({
   container: {
     flexGrow: 1,
     width : '99%',
-    marginTop: "10%",
-    maxHeight: "85vh",
+    marginTop: "15px",
+    maxHeight: "82vh",
   },
   headerFont: {
     fontFamily: theme.headerFont.fontFamily,
   },
   pagination:{
       height: theme.spacing(7),
-  }
+  },
+  margin: {
+    marginTop: theme.spacing(9),
+    left: "30%",
+    minWidth: "30%",
+  },
 }));
 
 export default function LabDetailsTable(props) {
@@ -72,30 +77,32 @@ export default function LabDetailsTable(props) {
   const [rowsPerPage] = useState(10);
   const [labDetails, setLabDetails] = useState([]);
   const [totalLabDetails, setTotalLabDetails] = useState(0);
-  // const [filters, setFilters] = useState(false);
-  // const [filterProps, setFilterProps] = useState({});
+  const [filter, setFilter] = useState('');
 
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
 
-  // const handleFilters = (row) => {
-  //   setFilters(true)
-  //   setFilterProps(row)
-  // }
-
   useEffect(() => {
-      getLabDetails(props)
+    getLabDetails(props)
   },[page])
+
+  useEffect(() =>{
+    if (filter.length >=3 || filter.length === 0){
+      getLabDetails(props)
+    }
+  },[filter])
 
   const getLabDetails = async (props) => {
     const api = await auth;
     const params = {};
     params.page = page
     params.limit = rowsPerPage
-    console.log('--------->LABS',props);
     if (props.filterProps !== undefined){
       params.loinc_num = props.filterProps.loinc_num
+    }
+    if (filter.length >= 3){
+      params.search = filter
     }
     api
     .get('/labs', {params})
@@ -109,11 +116,17 @@ export default function LabDetailsTable(props) {
 
   return (
     props.filters === false ?
+    <div>
+    <TextField
+        className={classes.margin}
+        id="input-with-icon-textfield"
+        label="Search for Labs"
+        onChange={(e) => {setFilter(e.target.value)}}
+    />
     <TableContainer className={classes.container} component={Paper}>
       <Table className={classes.table} stickyHeader aria-label="sticky table">
       <TableHead>
           <TableRow>
-            {/* <StyledTableCell className={classes.headerFont}>CLIA</StyledTableCell> */}
             <StyledTableCell className={classes.headerFont}>Lab Name</StyledTableCell>
             <StyledTableCell className={classes.headerFont} align="right">Address</StyledTableCell>
             <StyledTableCell className={classes.headerFont} align="right">Type</StyledTableCell>
@@ -148,6 +161,7 @@ export default function LabDetailsTable(props) {
           </TableRow>
         </TableFooter>
       </Table>
-    </TableContainer> : <div onLoad={props.setLink('/lab_tests')}></div>
+    </TableContainer>
+    </div> : <div onLoad={props.setLink('/lab_tests')}></div>
   );
 }
