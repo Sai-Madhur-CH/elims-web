@@ -1,6 +1,6 @@
 import 'date-fns';
-import React, {useState,useEffect} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, {useState} from 'react';
+import { withStyles,makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -11,16 +11,49 @@ import {
 import { toast } from 'react-toastify';
 import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core';
-import { MultipleSelect } from "react-select-material-ui";
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+// import { MultipleSelect } from "react-select-material-ui";
+// import Switch from '@material-ui/core/Switch';
+// import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
+import IconButton from '@material-ui/core/IconButton';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+
+
+
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
+
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
+    },
+  },
+}))(TableRow);
 
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
         width: "99%",
-        marginTop: "7%",
-        fontFamily: theme.typography.fontFamily,
+        marginTop: "8%",
     },
     inputWidth:{
       minWidth: "30%",
@@ -46,21 +79,52 @@ const useStyles = makeStyles((theme) => ({
       minHeight: "65px",
       maxWidth: "38%",
     },
+    headerFont: {
+      fontFamily: theme.headerFont.fontFamily,
+    },
+    formAddControl:{
+      minWidth: "80%",
+    }
 }));
+
+const options = [
+  {
+    id:1,
+    name:'Complete Blood Picture',
+    price:200
+  },
+  {
+    id:2,
+    name:'Fasting Blood Suger',
+    price:250
+  },
+  {
+    id:3,
+    name:'X-Ray',
+    price:500
+  },
+  {
+    id:4,
+    name:'Lipid Panel',
+    price:350
+  }
+]
 
 export default function Appointments() {
   const classes = useStyles();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [fromTime, setFromTime] = useState(new Date());
   const [toTime, setToTime] = useState(new Date());
-  const physicainsOptions = ["Physician 1", "Physician 2", "Physician 3", "Physician 4"];
-  const clinicianOptions = ["Clinician 1", "Clinician 2", "Clinician 3", "Clinician 4"];
-  const testOptions = ["Complete Blood Picture", "X-Ray", "Lipid Panel", "Fasting Blood Suger"];
-  const [selectedPhysician, setSelectedPhysician] = useState([]);
-  const [selectedClinician, setSelectedClinician] = useState([]);
+  // const physicainsOptions = ["Physician 1", "Physician 2", "Physician 3", "Physician 4"];
+  // const clinicianOptions = ["Clinician 1", "Clinician 2", "Clinician 3", "Clinician 4"];
+  const [testOptions, setTestOptions] = useState(options);
+  // const [selectedPhysician, setSelectedPhysician] = useState([]);
+  // const [selectedClinician, setSelectedClinician] = useState([]);
   const [selectedTests, setSelectedTests] = useState([]);
   const [TotalFees, setTotalFees] = useState(0);
-  const [switchValue, setSwitchValue] = useState(false)
+  // const [switchValue, setSwitchValue] = useState(false);
+  const [add, setAdd] = useState(false);
+  const [remove, setRemove] = useState(false);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -80,26 +144,35 @@ export default function Appointments() {
     }
   }
 
-  const handleSelectPhysicians = (values) => {
-    setSelectedPhysician(values)
-  };
+  // const handleSelectPhysicians = (values) => {
+  //   setSelectedPhysician(values)
+  // };
 
-  const handleSelectClinician = (values) => {
-    setSelectedClinician(values)
-  };
+  // const handleSelectClinician = (values) => {
+  //   setSelectedClinician(values)
+  // };
 
-  const handleSelectTests = (values) => {
-    setSelectedTests(values)
-  };
+  // const handleSelectTests = (values) => {
+  //   setSelectedTests(values)
+  // };
 
-  useEffect(() => {
-    if (selectedTests && selectedTests.length > 0){
-      setTotalFees(selectedTests.length * 250)
-    }
-    else(
-      setTotalFees(0)
-    )
-  }, [selectedTests])
+  const handleAddTests = (e) => {
+      setSelectedTests(selectedTests.concat(e.target.value))
+      setAdd(!add)
+      setRemove(false)
+      const newList = testOptions.filter((item) => item.id !== e.target.value.id);
+      setTestOptions(newList)
+      setTotalFees(TotalFees + e.target.value.price)
+  }
+
+  const handleRemoveTests = (e) => {
+    const newList = selectedTests.filter((item) => item.id !== e.target.value.id);
+    setSelectedTests(newList)
+    setTestOptions(testOptions.concat(e.target.value))
+    setAdd(false)
+    setRemove(false)
+    setTotalFees(TotalFees - e.target.value.price)
+  }
 
   return (
     <div className={classes.root}>
@@ -139,6 +212,27 @@ export default function Appointments() {
           id="standard-basic"
           label="Patient Sex"
           helperText="Enter Patient Sex"
+        />
+        <TextField
+          className={classes.inputWidth}
+          id="standard-basic"
+          label="Patient Marital Status"
+          helperText="Enter Marital Status"
+        />
+      </Grid>
+
+      <Grid container justify="space-around" className={classes.margin}>
+        <TextField
+          className={classes.inputWidth}
+          id="standard-basic"
+          label="Patient SS Number"
+          helperText="Enter Patient SS Number"
+        />
+        <TextField
+          className={classes.inputWidth}
+          id="standard-basic"
+          label="Patient Address"
+          helperText="Enter Patient Address"
         />
         <TextField
           className={classes.inputWidth}
@@ -188,7 +282,97 @@ export default function Appointments() {
         />
       </Grid>
       
+      <Grid container justify="inherit" className={classes.margin} >
+        <Grid item sm={1}>
+          <IconButton onClick={() => {setAdd(!add)}}><AddIcon /></IconButton>
+        </Grid>
+        <Grid item sm={4}>
+        {add && testOptions && testOptions.length > 0 ? <FormControl className={classes.formAddControl}>
+                <InputLabel id="demo-simple-select-label">Select Tests</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  onChange={handleAddTests}
+                >
+                  {testOptions.map(test => (
+                      <MenuItem key={test.id} value={test}>{test.name}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl> : null}
+        </Grid>
+        <Grid item sm={1}>
+        <IconButton color='primary' onClick={() => {setRemove(!remove)}}><RemoveIcon /></IconButton>
+        </Grid>
+        <Grid item sm={4}>
+        {remove && selectedTests && selectedTests.length > 0 ? <FormControl className={classes.formAddControl}>
+          <InputLabel id="demo-simple-select-label">Remove Tests</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            onChange={handleRemoveTests}
+          >
+            {selectedTests.map(test => (
+                <MenuItem key={test.id} value={test}>{test.name}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>: null }
+        </Grid>
+      </Grid>
+      
       <Grid container justify="space-around" className={classes.margin}>
+        <TableContainer className={classes.reportcontainer} component={Paper} >
+          <Table className={classes.table} stickyHeader aria-label="sticky table">
+            <TableHead>
+                <StyledTableRow>
+                  <StyledTableCell className={classes.headerFont} align='left'>S.No</StyledTableCell>
+                  <StyledTableCell className={classes.headerFont} align='center'>Item Description</StyledTableCell>
+                  <StyledTableCell className={classes.headerFont} align='right'>Price</StyledTableCell>
+                </StyledTableRow>
+            </TableHead>
+            <TableBody>
+                {selectedTests && selectedTests.length > 0 ? selectedTests.map((test,i) => (
+                  <StyledTableRow key={i}>
+                    <StyledTableCell align="left">{i + 1}</StyledTableCell>
+                    <StyledTableCell align="center">{test.name}</StyledTableCell>
+                    <StyledTableCell align="right">{test.price}</StyledTableCell>
+                  </StyledTableRow>
+                ))
+                : <StyledTableRow>
+                <StyledTableRow></StyledTableRow>
+                <StyledTableCell align="center">Click on +,- to add or remove tests in table</StyledTableCell>
+                <StyledTableRow></StyledTableRow>
+                </StyledTableRow>
+                }
+                {selectedTests && selectedTests.length > 0 ? <StyledTableRow>
+                  <StyledTableCell></StyledTableCell>
+                  <StyledTableCell className={classes.headerFont} align="center">Total</StyledTableCell>
+                  <StyledTableCell className={classes.headerFont} align="right">{TotalFees}</StyledTableCell>
+                </StyledTableRow> : null}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Grid>
+      
+      <Grid>
+      <Button
+        variant="contained"
+        color="primary"
+        className={classes.add}
+        // onClick={handleAdd}
+        alignItems="center"
+        >
+          create Appointment
+        </Button>
+      </Grid>
+    </MuiPickersUtilsProvider>
+    </div>
+  );
+}
+
+
+
+
+/* <Grid container justify="space-around" className={classes.margin}>
 
       <MultipleSelect
         className={classes.inputWidth}
@@ -229,45 +413,29 @@ export default function Appointments() {
           msgNoOptionsMatchFilter: "No tests matches the filter",
         }}
       />
-      </Grid>
+      </Grid> */
 
-      <Grid className={classes.margin} container justify="space-around" >
-        <TextField
-          className={classes.totalFeesInput}
-          id="standard-basic"
-          label="Total Amount"
-          helperText="Total Fee for tests"
-          value={TotalFees}
-        />
+      // <Grid className={classes.margin} container justify="space-around" >
+      //   <TextField
+      //     className={classes.totalFeesInput}
+      //     id="standard-basic"
+      //     label="Total Amount"
+      //     helperText="Total Fee for tests"
+      //     value={TotalFees}
+      //   />
 
-        <FormControlLabel
-          control={
-            <Switch
-              checked={switchValue}
-              onChange={() => {setSwitchValue(!switchValue)}}
-              name="Fee Paid ?"
-              inputProps={{ 'aria-label': 'secondary checkbox' }}
-            />
-          }
-          label="Fee Paid ?"
-        />
+      //   <FormControlLabel
+      //     control={
+      //       <Switch
+      //         checked={switchValue}
+      //         onChange={() => {setSwitchValue(!switchValue)}}
+      //         name="Fee Paid ?"
+      //         inputProps={{ 'aria-label': 'secondary checkbox' }}
+      //       />
+      //     }
+      //     label="Fee Paid ?"
+      //   />
 
-        <p className={classes.emptySpan}/>
+      //   <p className={classes.emptySpan}/>
         
-      </Grid>
-
-      <Grid>
-      <Button
-        variant="contained"
-        color="primary"
-        className={classes.add}
-        // onClick={handleAdd}
-        alignItems="center"
-        >
-          create Appointment
-        </Button>
-      </Grid>
-    </MuiPickersUtilsProvider>
-    </div>
-  );
-}
+      // </Grid>
