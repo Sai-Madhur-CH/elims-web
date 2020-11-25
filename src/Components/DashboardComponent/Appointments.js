@@ -5,10 +5,10 @@ import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker,
+  // KeyboardTimePicker,
+  // KeyboardDatePicker,
 } from '@material-ui/pickers';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core';
 // import { MultipleSelect } from "react-select-material-ui";
@@ -115,9 +115,9 @@ const options = [
 
 export default function Appointments() {
   const classes = useStyles();
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [fromTime, setFromTime] = useState(new Date());
-  const [toTime, setToTime] = useState(new Date());
+  // const [selectedDate, setSelectedDate] = useState(new Date());
+  // const [fromTime, setFromTime] = useState(new Date());
+  // const [toTime, setToTime] = useState(new Date());
   // const physicainsOptions = ["Physician 1", "Physician 2", "Physician 3", "Physician 4"];
   // const clinicianOptions = ["Clinician 1", "Clinician 2", "Clinician 3", "Clinician 4"];
   const [testOptions, setTestOptions] = useState(options);
@@ -129,23 +129,23 @@ export default function Appointments() {
   const [add, setAdd] = useState(false);
   const [remove, setRemove] = useState(false);
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
+  // const handleDateChange = (date) => {
+  //   setSelectedDate(date);
+  // };
 
-  const handleFromTimeChange = (date) => {
-    setFromTime(date);
-    setToTime(date);
-  }
+  // const handleFromTimeChange = (date) => {
+  //   setFromTime(date);
+  //   setToTime(date);
+  // }
 
-  const handleToTimeChange = (date) => {
-    if (date < fromTime) {
-        toast.error("To date should be greater than from date");
-    }  
-    else {
-    setToTime(date);
-    }
-  }
+  // const handleToTimeChange = (date) => {
+  //   if (date < fromTime) {
+  //       toast.error("To date should be greater than from date");
+  //   }  
+  //   else {
+  //   setToTime(date);
+  //   }
+  // }
 
   // const handleSelectPhysicians = (values) => {
   //   setSelectedPhysician(values)
@@ -331,7 +331,7 @@ export default function Appointments() {
             <TableHead>
                 <StyledTableRow>
                   <StyledTableCell className={classes.headerFont} align='left'>S.No</StyledTableCell>
-                  <StyledTableCell className={classes.headerFont} align='center'>Item Description</StyledTableCell>
+                  <StyledTableCell className={classes.headerFont} align='left'>Item Description</StyledTableCell>
                   <StyledTableCell className={classes.headerFont} align='right'>Price</StyledTableCell>
                 </StyledTableRow>
             </TableHead>
@@ -339,7 +339,7 @@ export default function Appointments() {
                 {selectedTests && selectedTests.length > 0 ? selectedTests.map((test,i) => (
                   <StyledTableRow key={i}>
                     <StyledTableCell align="left">{i + 1}</StyledTableCell>
-                    <StyledTableCell align="center">{test.name}</StyledTableCell>
+                    <StyledTableCell align="left">{test.name}</StyledTableCell>
                     <StyledTableCell align="right">{test.price}</StyledTableCell>
                   </StyledTableRow>
                 ))

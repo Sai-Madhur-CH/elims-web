@@ -153,7 +153,7 @@ const AdminMenu = {
       },
       {
         "name": "All Appointments",
-        "url": "/clinician_appointments"
+        "url": "/all_appointments"
       },
     ]
   }

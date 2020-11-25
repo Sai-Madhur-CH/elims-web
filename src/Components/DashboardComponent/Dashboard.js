@@ -13,6 +13,7 @@ import AppointmentsTable from './PhysicianAppointments';
 import LabDetailsTable from './LabTable';
 import LabTestsTable from './LabTestsTable';
 import ClinicianAppointmentsTable from './ClinicianAppointments';
+import ReceptionistAppointmentsTable from './ReceptionistAppointments';
 
 export default function Dashboard() {
 
@@ -113,6 +114,7 @@ export default function Dashboard() {
           {roleName === 'Receptionist' ?
           <div className="roleNameDiv">
           {link === '/create_appointment' ? <Appointments/> : null}
+          {link === '/all_appointments' ? <ReceptionistAppointmentsTable/> : null}
           </div> : null}
         </Grid>
       </Grid>
