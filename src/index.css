@@ -4,6 +4,12 @@
   src: url(./Assets/KronaOne-Regular.ttf);
 }
 
+.multiselect {
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  src: url(./Assets/OpenSans-Regular.ttf);
+}
+
 body {
   margin: 0;
   font-family: 'Krona One', sans-serif;

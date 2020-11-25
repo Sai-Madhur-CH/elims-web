@@ -15,21 +15,21 @@ import { MultipleSelect } from "react-select-material-ui";
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
         width: "99%",
         marginTop: "7%",
+        fontFamily: theme.typography.fontFamily,
     },
     inputWidth:{
-      minWidth: "20%",
+      minWidth: "30%",
       minHeight: "65px",
-      maxWidth: "20%",
+      maxWidth: "30%",
     },
     formControl: {
       margin: theme.spacing(2),
-      minWidth: "20%",
+      minWidth: "30%",
       minHeight: "65px",
     },
     add:{
@@ -39,12 +39,12 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(5),
     },
     totalFeesInput:{
-        minWidth: "20%"
+        minWidth: "30%" 
     },
     emptySpan:{
-      minWidth: "28%",
+      minWidth: "48%",
       minHeight: "65px",
-      maxWidth: "2*%",
+      maxWidth: "38%",
     },
 }));
 
