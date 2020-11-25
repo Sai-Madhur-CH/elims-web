@@ -53,6 +53,10 @@ export default function Dashboard() {
         setLink('/labs')
         setheaderName('Lab Details')
       }
+      else if (roleName === 'Receptionist'){
+        setLink('/create_appointment')
+        setheaderName('Create Appointment')
+      }
     } 
 
     
@@ -105,6 +109,10 @@ export default function Dashboard() {
           <div className="roleNameDiv">
           {link === '/calendar' ? <ClinicianDashbord roleName={roleName}/> : null}
           {link === '/clinician_appointments' ? <ClinicianAppointmentsTable/> : null}
+          </div> : null}
+          {roleName === 'Receptionist' ?
+          <div className="roleNameDiv">
+          {link === '/create_appointment' ? <Appointments/> : null}
           </div> : null}
         </Grid>
       </Grid>

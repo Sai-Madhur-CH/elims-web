@@ -128,7 +128,7 @@ const rows = {
     "role_name": "Physician",
     "status": "active",
     "appointments":[
-      { id:1, patient_name: 'paitent1',startDate: '2018-10-31T10:45', endDate: '2018-10-31T12:00', title: 'Meeting',roomId: 3, phone:9553390682, report_status : 'Ready for Review', selectedTests : ["Complete Blood Picture", "X-Ray"] },
+      { id:1, patient_name: 'paitent1',startDate: '2018-10-31T10:45', endDate: '2018-10-31T12:00', title: 'Meeting',roomId: 3, phone:9553390682, report_status : 'Ready for Review', selectedTests : ["Complete Blood Picture", "Report"] },
       { id:2, patient_name: 'paitent1',startDate: '2018-11-01T09:45', endDate: '2018-11-01T11:00', title: 'Meeting',roomId: 1, phone:9553390692, report_status : 'In Progress' },
       { id:3, patient_name: 'paitent2',startDate: '2018-11-01T12:00', endDate: '2018-11-01T13:30', title: 'Meeting',roomId: 1, phone:9553390612, report_status : 'Completed', description:'Everything looks normal as per the test reports.', selectedTests : ["Complete Blood Picture", "X-Ray"] },
     ],

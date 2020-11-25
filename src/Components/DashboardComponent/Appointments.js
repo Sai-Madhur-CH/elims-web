@@ -1,5 +1,5 @@
 import 'date-fns';
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
@@ -12,6 +12,9 @@ import { toast } from 'react-toastify';
 import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core';
 import { MultipleSelect } from "react-select-material-ui";
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -32,6 +35,17 @@ const useStyles = makeStyles((theme) => ({
     add:{
       margin: theme.spacing(5),
     },
+    margin:{
+      marginTop: theme.spacing(5),
+    },
+    totalFeesInput:{
+        minWidth: "20%"
+    },
+    emptySpan:{
+      minWidth: "28%",
+      minHeight: "65px",
+      maxWidth: "2*%",
+    },
 }));
 
 export default function Appointments() {
@@ -41,10 +55,12 @@ export default function Appointments() {
   const [toTime, setToTime] = useState(new Date());
   const physicainsOptions = ["Physician 1", "Physician 2", "Physician 3", "Physician 4"];
   const clinicianOptions = ["Clinician 1", "Clinician 2", "Clinician 3", "Clinician 4"];
-  const testOptions = ["Test 1", "Test 2", "Test 3", "Test 4"];
+  const testOptions = ["Complete Blood Picture", "X-Ray", "Lipid Panel", "Fasting Blood Suger"];
   const [selectedPhysician, setSelectedPhysician] = useState([]);
   const [selectedClinician, setSelectedClinician] = useState([]);
   const [selectedTests, setSelectedTests] = useState([]);
+  const [TotalFees, setTotalFees] = useState(0);
+  const [switchValue, setSwitchValue] = useState(false)
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -76,6 +92,15 @@ export default function Appointments() {
     setSelectedTests(values)
   };
 
+  useEffect(() => {
+    if (selectedTests && selectedTests.length > 0){
+      setTotalFees(selectedTests.length * 250)
+    }
+    else(
+      setTotalFees(0)
+    )
+  }, [selectedTests])
+
   return (
     <div className={classes.root}>
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -101,7 +126,29 @@ export default function Appointments() {
         />
       </Grid>
 
-      <Grid container justify="space-around">
+      <Grid container justify="space-around" className={classes.margin}>
+        <TextField
+          className={classes.inputWidth}
+          id="standard-basic"
+          label="Patient Age"
+          helperText="Enter Patient Age"
+          type="number"
+        />
+        <TextField
+          className={classes.inputWidth}
+          id="standard-basic"
+          label="Patient Sex"
+          helperText="Enter Patient Sex"
+        />
+        <TextField
+          className={classes.inputWidth}
+          id="standard-basic"
+          label="Patient Nationality"
+          helperText="Enter Patient Nationality"
+        />
+      </Grid>
+
+      <Grid container justify="space-around" className={classes.margin}>
         <KeyboardDatePicker
           className={classes.inputWidth}
           margin="normal"
@@ -141,7 +188,7 @@ export default function Appointments() {
         />
       </Grid>
       
-      <Grid container justify="space-around" >
+      <Grid container justify="space-around" className={classes.margin}>
 
       <MultipleSelect
         className={classes.inputWidth}
@@ -182,9 +229,33 @@ export default function Appointments() {
           msgNoOptionsMatchFilter: "No tests matches the filter",
         }}
       />
-      
-
       </Grid>
+
+      <Grid className={classes.margin} container justify="space-around" >
+        <TextField
+          className={classes.totalFeesInput}
+          id="standard-basic"
+          label="Total Amount"
+          helperText="Total Fee for tests"
+          value={TotalFees}
+        />
+
+        <FormControlLabel
+          control={
+            <Switch
+              checked={switchValue}
+              onChange={() => {setSwitchValue(!switchValue)}}
+              name="Fee Paid ?"
+              inputProps={{ 'aria-label': 'secondary checkbox' }}
+            />
+          }
+          label="Fee Paid ?"
+        />
+
+        <p className={classes.emptySpan}/>
+        
+      </Grid>
+
       <Grid>
       <Button
         variant="contained"
