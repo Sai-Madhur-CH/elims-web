@@ -71,6 +71,9 @@ const useStyles = makeStyles((theme) => ({
     margin:{
       marginTop: theme.spacing(5),
     },
+    tableMargin:{
+      marginTop: theme.spacing(2),
+    },
     totalFeesInput:{
         minWidth: "30%" 
     },
@@ -237,12 +240,13 @@ export default function Appointments() {
         <TextField
           className={classes.inputWidth}
           id="standard-basic"
-          label="Patient Nationality"
-          helperText="Enter Patient Nationality"
+          label="Patient Pincode"
+          helperText="Enter Patient Pincode"
+          type="number"
         />
       </Grid>
 
-      <Grid container justify="space-around" className={classes.margin}>
+      {/* <Grid container justify="space-around" className={classes.margin}>
         <KeyboardDatePicker
           className={classes.inputWidth}
           margin="normal"
@@ -280,14 +284,20 @@ export default function Appointments() {
             'aria-label': 'change time',
           }}
         />
-      </Grid>
+      </Grid> */}
       
       <Grid container justify="inherit" className={classes.margin} >
+
         <Grid item sm={1}>
           <IconButton onClick={() => {setAdd(!add)}}><AddIcon /></IconButton>
         </Grid>
-        <Grid item sm={4}>
-        {add && testOptions && testOptions.length > 0 ? <FormControl className={classes.formAddControl}>
+
+        <Grid item sm={1}>
+        <IconButton color='primary' onClick={() => {setRemove(!remove)}}><RemoveIcon /></IconButton>
+        </Grid>
+
+        {add && testOptions && testOptions.length > 0 ? <Grid item sm={4}>
+         <FormControl className={classes.formAddControl}>
                 <InputLabel id="demo-simple-select-label">Select Tests</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
@@ -298,13 +308,10 @@ export default function Appointments() {
                       <MenuItem key={test.id} value={test}>{test.name}</MenuItem>
                   ))}
                 </Select>
-              </FormControl> : null}
-        </Grid>
-        <Grid item sm={1}>
-        <IconButton color='primary' onClick={() => {setRemove(!remove)}}><RemoveIcon /></IconButton>
-        </Grid>
-        <Grid item sm={4}>
-        {remove && selectedTests && selectedTests.length > 0 ? <FormControl className={classes.formAddControl}>
+              </FormControl></Grid> : null}
+        
+        {remove && selectedTests && selectedTests.length > 0 ? <Grid item sm={4}>
+        <FormControl className={classes.formAddControl}>
           <InputLabel id="demo-simple-select-label">Remove Tests</InputLabel>
           <Select
             labelId="demo-simple-select-label"
@@ -315,11 +322,10 @@ export default function Appointments() {
                 <MenuItem key={test.id} value={test}>{test.name}</MenuItem>
             ))}
           </Select>
-        </FormControl>: null }
-        </Grid>
+        </FormControl></Grid>: null }
       </Grid>
       
-      <Grid container justify="space-around" className={classes.margin}>
+      <Grid container justify="space-around" className={classes.tableMargin}>
         <TableContainer className={classes.reportcontainer} component={Paper} >
           <Table className={classes.table} stickyHeader aria-label="sticky table">
             <TableHead>
