@@ -14,6 +14,8 @@ import LabDetailsTable from './LabTable';
 import LabTestsTable from './LabTestsTable';
 import ClinicianAppointmentsTable from './ClinicianAppointments';
 import ReceptionistAppointmentsTable from './ReceptionistAppointments';
+import BookAppointments from './PatientAppointments';
+import PatientAppointmentsTable from './PatientAppointmentsTable';
 
 export default function Dashboard() {
 
@@ -57,6 +59,10 @@ export default function Dashboard() {
       else if (roleName === 'Receptionist'){
         setLink('/create_appointment')
         setheaderName('Create Appointment')
+      }
+      else if (roleName === 'Patient'){
+        setLink('/book_appointment')
+        setheaderName('Book Appointment')
       }
     } 
 
@@ -115,6 +121,11 @@ export default function Dashboard() {
           <div className="roleNameDiv">
           {link === '/create_appointment' ? <Appointments/> : null}
           {link === '/all_appointments' ? <ReceptionistAppointmentsTable/> : null}
+          </div> : null}
+          {roleName === 'Patient' ?
+          <div className="roleNameDiv">
+          {link === '/book_appointment' ? <BookAppointments/> : null}
+          {link === '/patient_appointments' ? <PatientAppointmentsTable/> : null}
           </div> : null}
         </Grid>
       </Grid>
